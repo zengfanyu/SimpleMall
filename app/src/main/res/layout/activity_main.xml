@@ -5,12 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.zfy.simplemall.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.zfy.simplemall.activity.MainActivity">
     <!--这个frameLayout才是真正使用indicator填充的view，对height使用weight-->
     <FrameLayout
         android:id="@+id/real_tab_content"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
     </FrameLayout>
@@ -24,7 +25,7 @@
             android:id="@android:id/tabcontent"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="0">
         </FrameLayout>
     </android.support.v4.app.FragmentTabHost>
 
