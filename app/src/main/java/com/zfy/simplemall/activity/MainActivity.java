@@ -67,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public View buildIndicator(TabBean tab) {
-        View indicatorTab = mInflater.inflate(R.layout.indicator_tab, null);
-        ImageView ivTab = (ImageView) indicatorTab.findViewById(R.id.iv_tab);
-        TextView tvTab = (TextView) indicatorTab.findViewById(R.id.tv_tab);
+        View indicatorTabView = mInflater.inflate(R.layout.indicator_tab, null);
+        ImageView ivTab = (ImageView) indicatorTabView.findViewById(R.id.iv_tab);
+        TextView tvTab = (TextView) indicatorTabView.findViewById(R.id.tv_tab);
 
         ivTab.setBackgroundResource(tab.getIcon());
         tvTab.setText(tab.getTitle());
-        return indicatorTab;
+        return indicatorTabView;
     }
 }

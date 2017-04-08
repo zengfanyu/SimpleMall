@@ -2,11 +2,26 @@
 <LinearLayout
     android:id="@+id/activity_main"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.zfy.simplemall.activity.MainActivity">
+
+
+    <com.zfy.simplemall.widget.SearchToolBar
+        android:id="@+id/search_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:rightButtonIcon="@drawable/icon_back_32px"
+        app:navigationIcon="@drawable/icon_back_32px"
+        app:title="@string/home">
+
+    </com.zfy.simplemall.widget.SearchToolBar>
+
     <!--这个frameLayout才是真正使用indicator填充的view，对height使用weight-->
     <FrameLayout
         android:id="@+id/real_tab_content"
