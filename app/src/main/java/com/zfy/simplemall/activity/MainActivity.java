@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -36,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initTab() {
-        TabBean homeTab = new TabBean(R.string.home, R.mipmap.icon_home, HomeFragment.class);
-        TabBean cartTab = new TabBean(R.string.cart, R.mipmap.icon_cart, CartFragment.class);
-        TabBean categoryTab = new TabBean(R.string.category, R.mipmap.icon_discover, CategoryFragment.class);
-        TabBean hotTab = new TabBean(R.string.hot, R.mipmap.icon_hot, HotFragment.class);
-        TabBean mineTab = new TabBean(R.string.mime, R.mipmap.icon_user, MineFragment.class);
+        TabBean homeTab = new TabBean(R.string.home, R.drawable.selector_icon_home, HomeFragment.class);
+        TabBean hotTab = new TabBean(R.string.hot, R.drawable.selector_icon_hot, HotFragment.class);
+        TabBean categoryTab = new TabBean(R.string.category, R.drawable.selector_icon_categoy, CategoryFragment.class);
+        TabBean cartTab = new TabBean(R.string.cart, R.drawable.selector_icon_cart, CartFragment.class);
+        TabBean mineTab = new TabBean(R.string.mine, R.drawable.selector_icon_mine, MineFragment.class);
         mTabs.add(homeTab);
         mTabs.add(cartTab);
         mTabs.add(categoryTab);
@@ -59,6 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
             mTabHost.addTab(tabSpec, tab.getFragment(), null);
         }
+        //去掉Tab之间的分割线
+        mTabHost.getTabWidget().setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
+        //默认选择第1个
+        mTabHost.setCurrentTab(0);
     }
 
     public View buildIndicator(TabBean tab) {
