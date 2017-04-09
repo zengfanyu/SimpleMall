@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- ToolBar背景颜色 -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/color_tab_icon_selected</item>
         <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/color_tab_icon_selected</item>
         <!-- EditText正在输入时，RadioButton选时的颜色 -->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>

@@ -3,18 +3,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+    <ImageButton
+        android:id="@+id/toolbar_leftButton"
+        style="@android:style/Widget.Material.Toolbar.Button.Navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:visibility="visible"/>
+
     <EditText
-        android:id="@+id/et_toolbar_search"
+        android:id="@+id/toolbar_search_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
+        android:layout_gravity="center"
         android:drawableStart="@mipmap/icon_search"
         android:gravity="center"
-        android:layout_gravity="center"
         android:hint="@string/please_input_search_content"
+        android:background="@drawable/selector_search_view"
         android:visibility="gone"/>
+
     <TextView
-        android:id="@+id/tv_toolbar_title"
+        android:id="@+id/toolbar_title_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -23,14 +34,15 @@
         android:textSize="20sp"
         android:visibility="gone"
         />
+
     <ImageButton
-        android:id="@+id/ib_toolbar_right"
+        android:id="@+id/toolbar_rightButton"
+        style="@android:style/Widget.Material.Toolbar.Button.Navigation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:visibility="gone"
-        style="@android:style/Widget.Material.Toolbar.Button.Navigation"/>
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

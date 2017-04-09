@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zfy.simplemall.R;
+import com.zfy.simplemall.listener.onToolbarLeftButtonClickListener;
+import com.zfy.simplemall.listener.onToolbarRightButtonClickListener;
 
 /**
  * 自定义的ToolBar
@@ -26,7 +28,11 @@ public class SearchToolBar extends Toolbar {
     private EditText mSearchView;
     private TextView mTitleView;
     private ImageButton mRightImageBtn;
-    private View mView;
+    private View mToolbarContentView;
+    private ImageButton mLeftImageBtn;
+    private boolean isShowSearchView;
+    private Drawable mRightIcon;
+    private Drawable mLeftIcon;
 
     public SearchToolBar(Context context) {
         this(context, null);
@@ -38,53 +44,98 @@ public class SearchToolBar extends Toolbar {
 
     public SearchToolBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        initView();
-
-        setContentInsetsRelative(10,10);
+        //设置padding
+        setContentInsetsRelative(10, 10);
+        //拿到自定义的属性
         if (attrs != null) {
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.SearchToolBar, defStyleAttr, 0);
-
-
-            final Drawable rightIcon = a.getDrawable(R.styleable.SearchToolBar_rightButtonIcon);
-            if (rightIcon != null) {
-//                setNavigationIcon(navIcon);
-                setRightButtonIcon(rightIcon);
-
-            }
-
-            boolean isShowSearchView=a.getBoolean(R.styleable.SearchToolBar_isShowSearchView,false);
-            if (isShowSearchView){
-                showSearchView();
-                hideTitleView();
-            }
+            mRightIcon = a.getDrawable(R.styleable.SearchToolBar_rightButtonIcon);
+            mLeftIcon = a.getDrawable(R.styleable.SearchToolBar_leftButtonIcon);
+            isShowSearchView = a.getBoolean(R.styleable.SearchToolBar_isShowSearchView, false);
             a.recycle();
         }
+        initView();
+        initListener();
+    }
+
+    private void initListener() {
+        mLeftImageBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mLeftButtonClickListener != null) {
+                    mLeftButtonClickListener.onClick();
+                }
+            }
+        });
+        mRightImageBtn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mRightButtonClickListener != null) {
+                    mRightButtonClickListener.onClick();
+                }
+            }
+        });
     }
 
     private void initView() {
-        if (mView == null) {
+        if (mToolbarContentView == null) {
             mInflater = LayoutInflater.from(getContext());
-            mView = mInflater.inflate(R.layout.toolbar_tab, null);
-            mSearchView = (EditText) mView.findViewById(R.id.et_toolbar_search);
-            mTitleView = (TextView) mView.findViewById(R.id.tv_toolbar_title);
-            mRightImageBtn = (ImageButton) mView.findViewById(R.id.ib_toolbar_right);
-
+            mToolbarContentView = mInflater.inflate(R.layout.toolbar_tab, null);
+            mSearchView = (EditText) mToolbarContentView.findViewById(R.id.toolbar_search_et);
+            mTitleView = (TextView) mToolbarContentView.findViewById(R.id.toolbar_title_tv);
+            mRightImageBtn = (ImageButton) mToolbarContentView.findViewById(R.id.toolbar_rightButton);
+            mLeftImageBtn = (ImageButton) mToolbarContentView.findViewById(R.id.toolbar_leftButton);
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
-            addView(mView, lp);
+            addView(mToolbarContentView, lp);
+        }
+
+        if (mRightIcon != null) {
+            setRightButtonIcon(mRightIcon);
+
+        }
+        if (mLeftIcon != null) {
+            setLeftButtonIcon(mLeftIcon);
+
+        }
+        if (isShowSearchView) {
+            setShowSearchView();
+        } else {
+            setHideSearchView();
         }
     }
 
-    public void setRightButtonIcon(Drawable icon) {
+    public void setRightButtonIcon(Drawable rightButtonIcon) {
         if (mRightImageBtn != null) {
-            mRightImageBtn.setImageDrawable(icon);
+            mRightImageBtn.setImageDrawable(rightButtonIcon);
             mRightImageBtn.setVisibility(VISIBLE);
         }
     }
 
-    public void setRightButtonOnClickListener(OnClickListener listener) {
-        mRightImageBtn.setOnClickListener(listener);
+    public void setLeftButtonIcon(Drawable leftButtonIcon) {
+        if (mLeftImageBtn != null) {
+            mLeftImageBtn.setImageDrawable(leftButtonIcon);
+        }
+    }
+
+//    public interface onToolbarLeftButtonClickListener {
+//        void onClick();
+//    }
+//
+//    public interface onToolbarRightButtonClickListener {
+//        void onClick();
+//    }
+
+    private onToolbarLeftButtonClickListener mLeftButtonClickListener;
+
+    private onToolbarRightButtonClickListener mRightButtonClickListener;
+
+    public void setRightButtonOnClickListener(onToolbarRightButtonClickListener listener) {
+        mRightButtonClickListener = listener;
+    }
+
+    public void setLeftButtonOnClickListener(onToolbarLeftButtonClickListener listener) {
+        mLeftButtonClickListener = listener;
     }
 
     //重写Toolbar的setTitle方法
@@ -101,6 +152,20 @@ public class SearchToolBar extends Toolbar {
 
     }
 
+    public void setShowSearchView() {
+        showSearchView();
+        hideTitleView();
+        hideLeftButton();
+        hideRightButton();
+    }
+
+    private void setHideSearchView() {
+        hideSearchView();
+        showTitleView();
+        hideLeftButton();
+        hideRightButton();
+    }
+
     public void showSearchView() {
         mSearchView.setVisibility(VISIBLE);
     }
@@ -115,5 +180,21 @@ public class SearchToolBar extends Toolbar {
 
     public void hideTitleView() {
         mTitleView.setVisibility(GONE);
+    }
+
+    public void showLeftButton() {
+        mLeftImageBtn.setVisibility(VISIBLE);
+    }
+
+    public void hideLeftButton() {
+        mLeftImageBtn.setVisibility(GONE);
+    }
+
+    public void showRightButton() {
+        mRightImageBtn.setVisibility(VISIBLE);
+    }
+
+    public void hideRightButton() {
+        mRightImageBtn.setVisibility(GONE);
     }
 }

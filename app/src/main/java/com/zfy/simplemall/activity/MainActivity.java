@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.bean.TabBean;
@@ -17,6 +18,9 @@ import com.zfy.simplemall.fragment.CategoryFragment;
 import com.zfy.simplemall.fragment.HomeFragment;
 import com.zfy.simplemall.fragment.HotFragment;
 import com.zfy.simplemall.fragment.MineFragment;
+import com.zfy.simplemall.listener.onToolbarLeftButtonClickListener;
+import com.zfy.simplemall.listener.onToolbarRightButtonClickListener;
+import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +30,34 @@ public class MainActivity extends AppCompatActivity {
     private FragmentTabHost mTabHost;
     private LayoutInflater mInflater;
     private List<TabBean> mTabs = new ArrayList<>(5);
+    private SearchToolBar mToolBar;
 
     //1.使用FragmentTabHost需要Activity继承FragmentActivity，AppCompatActivity已经继承了FragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        intiView();
         initTab();
+    }
+
+    private void intiView() {
+        mToolBar= (SearchToolBar) findViewById(R.id.search_tool_bar);
+        mToolBar.setLeftButtonOnClickListener(new onToolbarLeftButtonClickListener() {
+            @Override
+            public void onClick() {
+                Toast.makeText(MainActivity.this,"LeftButtonOnClick",Toast.LENGTH_SHORT).show();
+                mToolBar.showSearchView();
+                mToolBar.hideTitleView();
+            }
+        });
+        mToolBar.setRightButtonOnClickListener(new onToolbarRightButtonClickListener() {
+            @Override
+            public void onClick() {
+                Toast.makeText(MainActivity.this,"RightButtonOnClick",Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     private void initTab() {
