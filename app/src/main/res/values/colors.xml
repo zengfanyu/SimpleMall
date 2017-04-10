@@ -6,4 +6,6 @@
     <color name="color_tab_icon_normal">#a9b7b7</color>
     <color name="color_tab_icon_selected">#eb4f38</color>
     <color name="white">#ffffff</color>
+    <color name="black">#FF000000</color>
+    <color name="bg_color">#f1f1f1</color>
 </resources>

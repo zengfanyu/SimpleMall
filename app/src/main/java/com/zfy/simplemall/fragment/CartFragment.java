@@ -21,7 +21,7 @@ public class CartFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initViews() {
 
     }
 }

@@ -22,7 +22,7 @@ public class CategoryFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    public void initViews() {
 
     }
 }

@@ -11,7 +11,7 @@
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
-
+    <!--自定义toolbar的EditText的样式-->
     <style name="search_view">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/white</item>
@@ -23,6 +23,23 @@
         <item name="android:paddingLeft">4dp</item>
 
         <item name="android:singleLine">true</item>
+    </style>
+    <!--水平分割线的样式-->
+    <style name="line">
+        <item name="android:background">@color/bg_color</item>
+    </style>
+    <!--用于竖直分割的分割线样式-->
+    <style name="line_vertical" parent="line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+    <!--用于水平分割的分割线样式-->
+    <style name="line_horizontal" parent="line">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">fill_parent</item>
+
+        <item name="android:layout_gravity">center_horizontal</item>
+
     </style>
 
 </resources>
