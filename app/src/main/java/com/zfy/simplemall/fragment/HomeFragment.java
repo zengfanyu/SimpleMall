@@ -14,8 +14,6 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.orhanobut.logger.Logger;
 import com.zfy.simplemall.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
@@ -23,17 +21,15 @@ import com.zfy.simplemall.adapter.HomeCategoryAdapter;
 import com.zfy.simplemall.bean.BannerBean;
 import com.zfy.simplemall.bean.HomeCategoryBean;
 import com.zfy.simplemall.config.Constant;
+import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
+import com.zfy.simplemall.utils.okhttpplus.DisposeDataHandle;
+import com.zfy.simplemall.utils.okhttpplus.listener.DisposeDataListener;
+import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
+import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * 主页 Tab Fragment
@@ -45,7 +41,6 @@ public class HomeFragment extends BaseFragment {
     private View mHomeContentView;
     private SliderLayout mSliderLayout;
     private List<HomeCategoryBean> mHomeCategory;
-    private Gson mGson = new Gson();
     private List<BannerBean> mBanners;
 
     @Nullable
@@ -64,34 +59,21 @@ public class HomeFragment extends BaseFragment {
     }
 
     public void initBanner() {
-        OkHttpClient client = new OkHttpClient();
 
-        FormBody body = new FormBody.Builder().add("type", "1").build();
-
-        Request request = new Request.Builder()
-                .url(Constant.URL_HOME_BANNER_POST)
-                .post(body)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
+        CommonOkHttpClient.get(CommonRequest.createGetRequest(Constant.URL_HOME_BANNER_BASE,
+                new RequestParams("type", "1")), new DisposeDataHandle(new DisposeDataListener() {
             @Override
-            public void onFailure(Call call, IOException e) {
-
+            public void onSuccess(Object responseObj) {
+                BannerBean[] bannerBeans = (BannerBean[]) responseObj;
+                mBanners = Arrays.asList(bannerBeans);
+                initSlider();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String strJSON = response.body().string();
-                    Logger.json(strJSON);
-                    mBanners = mGson.fromJson(strJSON, new TypeToken<List<BannerBean>>() {
-                    }.getType());
-                    Logger.d(mBanners.size());
-                    initSlider();
-                }
+            public void onFailure(Object reasonObj) {
+
             }
-        });
-
-
+        }, BannerBean[].class));
     }
 
 
