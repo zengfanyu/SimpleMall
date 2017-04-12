@@ -1,6 +1,4 @@
-package com.zfy.simplemall.utils.okhttpplus;
-
-import com.zfy.simplemall.utils.okhttpplus.listener.DisposeDataListener;
+package com.zfy.simplemall.utils.okhttpplus.datadispose;
 
 /**
  * Created by Administrator on 2017/4/11/011.

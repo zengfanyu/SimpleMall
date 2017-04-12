@@ -26,10 +26,13 @@ public class CommonRequest {
         if (params != null) {
             for (Map.Entry<String, String> entry : params.urlParams.entrySet()) {
                 //TODO:添加‘&’
-                urlBuilder.append(entry.getKey()).append("=").append(entry.getValue());
+                urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
             }
         }
-        return new Request.Builder().url(urlBuilder.toString()).get().build();
+        return new Request.Builder()
+                .url(urlBuilder.substring(0, urlBuilder.length() - 1)) //去掉最后一个& 注意这个函数是佐凯有弊
+                .get()
+                .build();
     }
 
     /**

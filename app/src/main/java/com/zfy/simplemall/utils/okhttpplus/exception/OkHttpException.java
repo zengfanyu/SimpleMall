@@ -5,7 +5,7 @@ package com.zfy.simplemall.utils.okhttpplus.exception;
  */
 
 public class OkHttpException extends Exception {
-    private static final long serialVersionUID = 1L;
+
 
     /**
      * the server return code

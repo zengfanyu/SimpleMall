@@ -8,7 +8,8 @@ package com.zfy.simplemall.config;
 public class Constant {
     //"http://112.124.22.238:8081/course_api/banner/query?type=1"
     public static final String URL_HOME_BANNER_BASE = "http://112.124.22.238:8081/course_api/banner/query";
-
+    //http://112.124.22.238:8081/course_api/campaign/recommend
+    public static final String URL_HOME_CAMPAIGN="http://112.124.22.238:8081/course_api/campaign/recommend";
     public static final int HTTP_METHOD_GET = 1;
     public static final int HTTP_METHOD_POST = 2;
 

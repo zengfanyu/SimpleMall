@@ -14,20 +14,21 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.orhanobut.logger.Logger;
 import com.zfy.simplemall.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.adapter.HomeCategoryAdapter;
 import com.zfy.simplemall.bean.BannerBean;
+import com.zfy.simplemall.bean.CampaignBean;
+import com.zfy.simplemall.bean.HomeCampaignBean;
 import com.zfy.simplemall.bean.HomeCategoryBean;
 import com.zfy.simplemall.config.Constant;
+import com.zfy.simplemall.listener.onCampaignClickListener;
 import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
-import com.zfy.simplemall.utils.okhttpplus.DisposeDataHandle;
-import com.zfy.simplemall.utils.okhttpplus.listener.DisposeDataListener;
+import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
+import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,29 +80,32 @@ public class HomeFragment extends BaseFragment {
 
     //初始化RecyclerView
     private void initRecyclerView() {
-        //RecyclerView Item 的数据
-        mHomeCategory = new ArrayList<>();
-        HomeCategoryBean category = new HomeCategoryBean("热门活动", R.drawable.img_big_1, R.drawable.img_1_small1, R.drawable.img_1_small2);
-        mHomeCategory.add(category);
 
-        category = new HomeCategoryBean("有利可图", R.drawable.img_big_4, R.drawable.img_4_small1, R.drawable.img_4_small2);
-        mHomeCategory.add(category);
-        category = new HomeCategoryBean("品牌街", R.drawable.img_big_2, R.drawable.img_2_small1, R.drawable.img_2_small2);
-        mHomeCategory.add(category);
+        CommonOkHttpClient.get(CommonRequest.createGetRequest(Constant.URL_HOME_CAMPAIGN, null), new DisposeDataHandle(new DisposeDataListener() {
+            @Override
+            public void onSuccess(Object responseObj) {
+                HomeCampaignBean[] campaignBeen= (HomeCampaignBean[]) responseObj;
+                List<HomeCampaignBean> homeCampaignBeen = Arrays.asList(campaignBeen);
 
-        category = new HomeCategoryBean("金融街 包赚翻", R.drawable.img_big_1, R.drawable.img_3_small1, R.drawable.imag_3_small2);
-        mHomeCategory.add(category);
 
-        category = new HomeCategoryBean("超值购", R.drawable.img_big_0, R.drawable.img_0_small1, R.drawable.img_0_small2);
-        mHomeCategory.add(category);
+                RecyclerView recyclerView = (RecyclerView) mHomeContentView.findViewById(R.id.home_rv);
+                HomeCategoryAdapter adapter = new HomeCategoryAdapter(homeCampaignBeen, getActivity());
+                adapter.setOnCampaignClickListener(new onCampaignClickListener() {
+                    @Override
+                    public void onClick(View view, CampaignBean campaignBean) {
+                        Toast.makeText(getContext(),campaignBean.getTitle(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+                recyclerView.setAdapter(adapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+                recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+            }
 
-        Logger.d(mHomeCategory.size());
+            @Override
+            public void onFailure(Object reasonObj) {
 
-        RecyclerView recyclerView = (RecyclerView) mHomeContentView.findViewById(R.id.home_rv);
-        HomeCategoryAdapter adapter = new HomeCategoryAdapter(mHomeCategory, getActivity());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+            }
+        }, HomeCampaignBean[].class));
     }
 
     //初始化slider

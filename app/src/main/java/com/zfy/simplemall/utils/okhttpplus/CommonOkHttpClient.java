@@ -1,7 +1,7 @@
 package com.zfy.simplemall.utils.okhttpplus;
 
-import com.orhanobut.logger.Logger;
 import com.zfy.simplemall.config.Constant;
+import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.response.CommonJsonCallback;
 
 import java.util.concurrent.TimeUnit;

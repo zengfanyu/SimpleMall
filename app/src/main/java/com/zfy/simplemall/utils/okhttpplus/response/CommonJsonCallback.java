@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.orhanobut.logger.Logger;
 import com.zfy.simplemall.config.Constant;
-import com.zfy.simplemall.utils.okhttpplus.DisposeDataHandle;
+import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.exception.OkHttpException;
-import com.zfy.simplemall.utils.okhttpplus.listener.DisposeDataListener;
+import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 
 import java.io.IOException;
 
