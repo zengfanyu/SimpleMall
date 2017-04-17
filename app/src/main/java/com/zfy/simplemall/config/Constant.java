@@ -16,6 +16,10 @@ public class Constant {
     public static final String URL_HOME_CAMPAIGN = URL_BASE + "campaign/recommend";
     //http://112.124.22.238:8081/course_api/wares/hot/?curPage=1&pageSize=10
     public static final String URL_HOT_WARES = URL_BASE + "wares/hot";
+    //http://112.124.22.238:8081/course_api/wares/list?curPage=1&pageSize=10&categoryId=5
+    public static final String URL_WARES_LIST = URL_BASE + "wares/list";
+    //http://112.124.22.238:8081/course_api/category/list
+    public static final String URL_CATEGORY_LIST = URL_BASE + "category/list";
 
 
     /**

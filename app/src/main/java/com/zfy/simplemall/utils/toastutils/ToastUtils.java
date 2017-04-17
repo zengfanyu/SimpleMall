@@ -14,7 +14,6 @@ public class ToastUtils {
 
     public static void showToast(Context context, String showWhat) {
         if (toast == null) {
-            // TODO: 2017/4/17/017 此处使用Application的Context会crash    why？
             toast = Toast.makeText(context, showWhat, Toast.LENGTH_SHORT);
 
         } else {

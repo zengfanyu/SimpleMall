@@ -9,6 +9,7 @@
     <color name="black">#FF000000</color>
     <color name="bg_color">#f1f1f1</color>
     <color name="white_disable">#7fffffff</color>
+    <color name="darkgray">#a9a9a9</color>
 
     <color name="red_btn_color_disable">#7fff5454</color>
     <color name="red_btn_color_normal">#ffff5454</color>

@@ -1,12 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:custom="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <TextView
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/id_category_rv"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/category"
-        android:gravity="center"/>
+        android:layout_marginStart="2dp"
+        android:orientation="vertical">
+
+        <com.daimajia.slider.library.SliderLayout
+            android:id="@+id/id_slider"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            custom:auto_cycle="true"/>
+
+        <com.cjj.MaterialRefreshLayout
+            android:id="@+id/id_refresh"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:overlay="true"
+            app:wave_show="false"
+            >
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/id_wra_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.cjj.MaterialRefreshLayout>
+    </LinearLayout>
 
 </LinearLayout>
