@@ -16,17 +16,17 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.zfy.simplemall.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
-import com.zfy.simplemall.adapter.HomeCategoryAdapter;
+import com.zfy.simplemall.adapter.BaseAdapter;
+import com.zfy.simplemall.adapter.HCAdapter;
 import com.zfy.simplemall.bean.BannerBean;
-import com.zfy.simplemall.bean.CampaignBean;
 import com.zfy.simplemall.bean.HomeCampaignBean;
 import com.zfy.simplemall.config.Constant;
-import com.zfy.simplemall.listener.onCampaignClickListener;
 import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
+import com.zfy.simplemall.utils.toastutils.ToastUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,7 +66,7 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(Object responseObj) {
                 BannerBean[] bannerBeans = (BannerBean[]) responseObj;
                 mBanners = Arrays.asList(bannerBeans);
-                initSlider();
+                prepareSlider();
             }
 
             @Override
@@ -87,17 +87,7 @@ public class HomeFragment extends BaseFragment {
                 mHomeCampaignBeen = Arrays.asList(campaignBeen);
 
 
-                RecyclerView recyclerView = (RecyclerView) mHomeContentView.findViewById(R.id.home_rv);
-                HomeCategoryAdapter adapter = new HomeCategoryAdapter(mHomeCampaignBeen, getActivity());
-                adapter.setOnCampaignClickListener(new onCampaignClickListener() {
-                    @Override
-                    public void onClick(View view, CampaignBean campaignBean) {
-                        Toast.makeText(getContext(), campaignBean.getTitle(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-                recyclerView.setAdapter(adapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+                prepareRecyclerView();
             }
 
             @Override
@@ -107,8 +97,22 @@ public class HomeFragment extends BaseFragment {
         }, HomeCampaignBean[].class));
     }
 
+    private void prepareRecyclerView() {
+        RecyclerView recyclerView = (RecyclerView) mHomeContentView.findViewById(R.id.home_rv);
+        HCAdapter adapter = new HCAdapter(mHomeCampaignBeen, getContext());
+        adapter.setOnItemClickListener(new BaseAdapter.onItemClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                ToastUtils.showToast(getContext(), mHomeCampaignBeen.get(position).getTitle());
+            }
+        });
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+    }
+
     //初始化slider
-    private void initSlider() {
+    private void prepareSlider() {
         mSliderLayout = (SliderLayout) mHomeContentView.findViewById(R.id.slider);
         PagerIndicator indicator = (PagerIndicator) mHomeContentView.findViewById(R.id.custom_indicator);
         if (mBanners != null) {

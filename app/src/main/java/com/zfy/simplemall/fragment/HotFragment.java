@@ -13,7 +13,8 @@ import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
 import com.zfy.simplemall.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
-import com.zfy.simplemall.adapter.HotWaresAdapter;
+import com.zfy.simplemall.adapter.BaseAdapter;
+import com.zfy.simplemall.adapter.HWAdapter;
 import com.zfy.simplemall.bean.Page;
 import com.zfy.simplemall.bean.Wares;
 import com.zfy.simplemall.config.Constant;
@@ -43,7 +44,7 @@ public class HotFragment extends BaseFragment {
     private MaterialRefreshLayout mRefreshLayout;
     private List<Wares> mWaresList;
     private int mCurrentState = Constant.STATE_NORMAL;
-    private HotWaresAdapter mAdapter;
+    private HWAdapter mAdapter;
     private int mTotalPage;
 
     @Nullable
@@ -138,7 +139,13 @@ public class HotFragment extends BaseFragment {
     private void initRecyclerView() {
         switch (mCurrentState) {
             case Constant.STATE_NORMAL: //一般状态，也就是第一次展示数据的时候，需要new一个adapter
-                mAdapter = new HotWaresAdapter(mWaresList);
+                mAdapter = new HWAdapter(mWaresList, getContext(), R.layout.hot_wares_item);
+                mAdapter.setOnItemClickListener(new BaseAdapter.onItemClickListener() {
+                    @Override
+                    public void onClick(View view, int position) {
+                        ToastUtils.showToast(getContext(), mWaresList.get(position).getName());
+                    }
+                });
                 mRecyclerView.setAdapter(mAdapter);
                 mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
