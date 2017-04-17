@@ -67,9 +67,9 @@ public class MainActivity extends AppCompatActivity {
         TabBean cartTab = new TabBean(R.string.cart, R.drawable.selector_icon_cart, CartFragment.class);
         TabBean mineTab = new TabBean(R.string.mine, R.drawable.selector_icon_mine, MineFragment.class);
         mTabs.add(homeTab);
-        mTabs.add(cartTab);
-        mTabs.add(categoryTab);
         mTabs.add(hotTab);
+        mTabs.add(categoryTab);
+        mTabs.add(cartTab);
         mTabs.add(mineTab);
 
         mInflater = LayoutInflater.from(this);

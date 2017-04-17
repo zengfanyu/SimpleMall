@@ -25,7 +25,6 @@ public class CommonRequest {
         StringBuilder urlBuilder = new StringBuilder(baseUrl).append("?");
         if (params != null) {
             for (Map.Entry<String, String> entry : params.urlParams.entrySet()) {
-                //TODO:添加‘&’
                 urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
             }
         }

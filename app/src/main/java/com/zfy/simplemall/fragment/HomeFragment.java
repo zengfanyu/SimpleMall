@@ -20,7 +20,6 @@ import com.zfy.simplemall.adapter.HomeCategoryAdapter;
 import com.zfy.simplemall.bean.BannerBean;
 import com.zfy.simplemall.bean.CampaignBean;
 import com.zfy.simplemall.bean.HomeCampaignBean;
-import com.zfy.simplemall.bean.HomeCategoryBean;
 import com.zfy.simplemall.config.Constant;
 import com.zfy.simplemall.listener.onCampaignClickListener;
 import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
@@ -41,8 +40,8 @@ public class HomeFragment extends BaseFragment {
 
     private View mHomeContentView;
     private SliderLayout mSliderLayout;
-    private List<HomeCategoryBean> mHomeCategory;
     private List<BannerBean> mBanners;
+    private List<HomeCampaignBean> mHomeCampaignBeen;
 
     @Nullable
     @Override
@@ -61,7 +60,7 @@ public class HomeFragment extends BaseFragment {
 
     public void initBanner() {
 
-        CommonOkHttpClient.get(CommonRequest.createGetRequest(Constant.URL_HOME_BANNER_BASE,
+        CommonOkHttpClient.get(CommonRequest.createGetRequest(Constant.URL_HOME_BANNER,
                 new RequestParams("type", "1")), new DisposeDataHandle(new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
@@ -84,16 +83,16 @@ public class HomeFragment extends BaseFragment {
         CommonOkHttpClient.get(CommonRequest.createGetRequest(Constant.URL_HOME_CAMPAIGN, null), new DisposeDataHandle(new DisposeDataListener() {
             @Override
             public void onSuccess(Object responseObj) {
-                HomeCampaignBean[] campaignBeen= (HomeCampaignBean[]) responseObj;
-                List<HomeCampaignBean> homeCampaignBeen = Arrays.asList(campaignBeen);
+                HomeCampaignBean[] campaignBeen = (HomeCampaignBean[]) responseObj;
+                mHomeCampaignBeen = Arrays.asList(campaignBeen);
 
 
                 RecyclerView recyclerView = (RecyclerView) mHomeContentView.findViewById(R.id.home_rv);
-                HomeCategoryAdapter adapter = new HomeCategoryAdapter(homeCampaignBeen, getActivity());
+                HomeCategoryAdapter adapter = new HomeCategoryAdapter(mHomeCampaignBeen, getActivity());
                 adapter.setOnCampaignClickListener(new onCampaignClickListener() {
                     @Override
                     public void onClick(View view, CampaignBean campaignBean) {
-                        Toast.makeText(getContext(),campaignBean.getTitle(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), campaignBean.getTitle(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 recyclerView.setAdapter(adapter);
