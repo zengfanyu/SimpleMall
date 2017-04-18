@@ -3,20 +3,25 @@ package com.zfy.simplemall.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cjj.MaterialRefreshLayout;
+import com.cjj.MaterialRefreshListener;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.orhanobut.logger.Logger;
-import com.zfy.simplemall.Decoration.DividerItemDecoration;
+import com.zfy.simplemall.adapter.Decoration.DividerGridItemDecoration;
+import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.adapter.BaseAdapter;
 import com.zfy.simplemall.adapter.CategoryListAdapter;
+import com.zfy.simplemall.adapter.WaresAdapter;
 import com.zfy.simplemall.bean.BannerBean;
 import com.zfy.simplemall.bean.CategoryBean;
 import com.zfy.simplemall.bean.Page;
@@ -33,6 +38,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.zfy.simplemall.config.Constant.STATE_MORE;
+import static com.zfy.simplemall.config.Constant.STATE_NORMAL;
+import static com.zfy.simplemall.config.Constant.STATE_REFRESH;
 
 /**
  * 分类 Tab Fragment
@@ -51,6 +60,11 @@ public class CategoryFragment extends BaseFragment {
     private int mTotalPage;
     private List<Wares> mWaresList;
 
+
+    private int mCurrentState = STATE_NORMAL;
+    private WaresAdapter mAdapter;
+    private MaterialRefreshLayout mRefreshLayout;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -61,11 +75,49 @@ public class CategoryFragment extends BaseFragment {
 
     @Override
     public void initViews() {
+        initRefreshLayout();
         requestBannersData();
         requestCategoryData();
         requestWaresData(categoryId);
+
     }
 
+    private void initRefreshLayout() {
+        mRefreshLayout = (MaterialRefreshLayout) mCategoryContentView.findViewById(R.id.id_refresh);
+        mRefreshLayout.setLoadMore(true);
+        mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
+            @Override
+            public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
+                refreshData();
+            }
+
+            @Override
+            public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
+                if (curPage <= mTotalPage) {
+                    loadMoreData();
+                } else {
+                    ToastUtils.showToast(getContext(), "No more,sorry!");
+                    mRefreshLayout.finishRefreshLoadMore();
+                }
+            }
+        });
+    }
+
+    private void loadMoreData() {
+        curPage = ++curPage;
+        mCurrentState = STATE_MORE;
+        requestWaresData(categoryId);
+    }
+
+    private void refreshData() {
+        curPage = 1;
+        mCurrentState = STATE_REFRESH;
+        requestWaresData(categoryId);
+
+    }
+    /**
+     * 请求某一分类的广告数据
+     */
     private void requestWaresData(long categoryId) {
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("curPage", curPage + "");
@@ -79,8 +131,8 @@ public class CategoryFragment extends BaseFragment {
                 mWaresList = page.getList();
                 curPage = page.getCurrentPage();
                 pageSize = page.getPageSize();
-                mTotalPage = page.getTotalPage();
-                Logger.d("mWaresList:"+mWaresList.size());
+                mTotalPage = page.getTotalCount() / pageSize + 1;
+                Logger.d("mTotalPage:" + mTotalPage);
                 showWaresList();
             }
 
@@ -90,9 +142,37 @@ public class CategoryFragment extends BaseFragment {
             }
         }, Page.class));
     }
-
+    /**
+     * 展示广告数据
+     */
     private void showWaresList() {
-        // TODO: 2017/4/17/017 展示Wares的RecyclerView 以及刷新加载更多功能
+        switch (mCurrentState) {
+            case STATE_NORMAL:
+                if (mAdapter == null) {
+                    RecyclerView rvWares = (RecyclerView) mCategoryContentView.findViewById(R.id.id_wares_rv);
+                    mAdapter = new WaresAdapter(mWaresList, getContext(), R.layout.gird_wares_item);
+                    rvWares.setAdapter(mAdapter);
+                    rvWares.addItemDecoration(new DividerGridItemDecoration(getContext()));
+                    rvWares.setItemAnimator(new DefaultItemAnimator());
+                    rvWares.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                } else {
+                    mAdapter.clearData();
+                    mAdapter.addData(mWaresList);
+                }
+                break;
+            case STATE_REFRESH:
+                mAdapter.clearData();
+                mAdapter.addData(mWaresList);
+                mRefreshLayout.finishRefresh();
+                break;
+            case STATE_MORE:
+                mAdapter.addData(mAdapter.getDatas().size(), mWaresList);
+                mRefreshLayout.finishRefreshLoadMore();
+                break;
+            default:
+                break;
+        }
+
     }
 
     /**
@@ -106,6 +186,11 @@ public class CategoryFragment extends BaseFragment {
                 mCategories = Arrays.asList(beans);
                 Logger.d("mCategories" + mCategories.size());
                 showCategoryList();
+
+                if (mCategories != null && mCategories.size() > 0) {
+                    categoryId = mCategories.get(0).getId();
+                    requestWaresData(categoryId);
+                }
             }
 
             @Override
@@ -125,8 +210,13 @@ public class CategoryFragment extends BaseFragment {
         adapter.setOnItemClickListener(new BaseAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                // TODO: 2017/4/17/017 此处拿到的 id 字段作为 categoryId 请求服务器数据
                 ToastUtils.showToast(getContext(), mCategories.get(position).getId() + "");
+                categoryId = mCategories.get(position).getId();
+                //此处点击了另外一个分类，则应该从另外一个分类的第1页开始加载，
+                // 并且此时的加载状态应该是NORMAL
+                curPage = 1;
+                mCurrentState = STATE_NORMAL;
+                requestWaresData(categoryId);
             }
         });
         rvCategory.setAdapter(adapter);

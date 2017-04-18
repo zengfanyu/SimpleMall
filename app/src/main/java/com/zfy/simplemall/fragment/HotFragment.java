@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
-import com.zfy.simplemall.Decoration.DividerItemDecoration;
+import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.adapter.BaseAdapter;
 import com.zfy.simplemall.adapter.HWAdapter;

@@ -14,7 +14,7 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.zfy.simplemall.Decoration.DividerItemDecoration;
+import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.adapter.BaseAdapter;
 import com.zfy.simplemall.adapter.HCAdapter;

@@ -1,4 +1,4 @@
-package com.zfy.simplemall.Decoration;
+package com.zfy.simplemall.adapter.Decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;
