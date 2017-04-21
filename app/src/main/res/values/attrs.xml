@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Toolbar的自定义属性-->
     <declare-styleable name="SearchToolBar">
-
         <attr name="rightButtonIcon" format="reference"/>
         <attr name="isShowSearchView" format="boolean"/>
         <attr name="leftButtonIcon" format="reference"/>
+    </declare-styleable>
+    <!--购物车中控件的自定义属性-->
+    <declare-styleable name="CartItemCombinationLayout">
+        <attr name="value" format="integer|reference"/>
+        <attr name="maxValue" format="integer|reference"/>
+        <attr name="minValue" format="integer|reference"/>
+        <attr name="btnDrawable" format="reference"/>
+        <attr name="textViewBg" format="reference"/>
     </declare-styleable>
 </resources>
