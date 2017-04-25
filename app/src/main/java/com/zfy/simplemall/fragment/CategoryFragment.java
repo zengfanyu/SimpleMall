@@ -16,11 +16,11 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.orhanobut.logger.Logger;
-import com.zfy.simplemall.adapter.Decoration.DividerGridItemDecoration;
-import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.adapter.BaseAdapter;
 import com.zfy.simplemall.adapter.CategoryListAdapter;
+import com.zfy.simplemall.adapter.Decoration.DividerGridItemDecoration;
+import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.adapter.WaresAdapter;
 import com.zfy.simplemall.bean.BannerBean;
 import com.zfy.simplemall.bean.CategoryBean;
@@ -64,6 +64,7 @@ public class CategoryFragment extends BaseFragment {
     private int mCurrentState = STATE_NORMAL;
     private WaresAdapter mAdapter;
     private MaterialRefreshLayout mRefreshLayout;
+    private RecyclerView mRvWares;
 
     @Nullable
     @Override
@@ -115,6 +116,7 @@ public class CategoryFragment extends BaseFragment {
         requestWaresData(categoryId);
 
     }
+
     /**
      * 请求某一分类的广告数据
      */
@@ -138,27 +140,23 @@ public class CategoryFragment extends BaseFragment {
 
             @Override
             public void onFailure(Object reasonObj) {
-
+                ToastUtils.showToast(getContext(), "Wares数据请求错误");
             }
         }, Page.class));
     }
+
     /**
      * 展示广告数据
      */
     private void showWaresList() {
         switch (mCurrentState) {
             case STATE_NORMAL:
-                if (mAdapter == null) {
-                    RecyclerView rvWares = (RecyclerView) mCategoryContentView.findViewById(R.id.id_wares_rv);
-                    mAdapter = new WaresAdapter(mWaresList, getContext(), R.layout.gird_wares_item);
-                    rvWares.setAdapter(mAdapter);
-                    rvWares.addItemDecoration(new DividerGridItemDecoration(getContext()));
-                    rvWares.setItemAnimator(new DefaultItemAnimator());
-                    rvWares.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                } else {
-                    mAdapter.clearData();
-                    mAdapter.addData(mWaresList);
-                }
+                mRvWares = (RecyclerView) mCategoryContentView.findViewById(R.id.id_wares_rv);
+                mAdapter = new WaresAdapter(mWaresList, getContext(), R.layout.gird_wares_item);
+                mRvWares.setAdapter(mAdapter);
+                mRvWares.addItemDecoration(new DividerGridItemDecoration(getContext()));
+                mRvWares.setItemAnimator(new DefaultItemAnimator());
+                mRvWares.setLayoutManager(new GridLayoutManager(getContext(), 2));
                 break;
             case STATE_REFRESH:
                 mAdapter.clearData();
@@ -195,7 +193,7 @@ public class CategoryFragment extends BaseFragment {
 
             @Override
             public void onFailure(Object reasonObj) {
-
+                ToastUtils.showToast(getContext(), "Category数据请求错误");
             }
         }, CategoryBean[].class));
     }
@@ -241,7 +239,7 @@ public class CategoryFragment extends BaseFragment {
 
                     @Override
                     public void onFailure(Object reasonObj) {
-
+                        ToastUtils.showToast(getContext(), "Banner数据请求错误");
                     }
                 }, BannerBean[].class));
     }

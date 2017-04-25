@@ -32,6 +32,7 @@ public class CartProvider {
         if (tmpCart != null) {
             tmpCart.setCount(tmpCart.getCount() + 1);
         } else {
+            shoppingCart.setCount(1);
             mDatas.put(cartId, shoppingCart);
         }
         commit();

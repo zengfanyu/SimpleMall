@@ -10,8 +10,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zfy.simplemall.R;
@@ -27,9 +27,9 @@ public class SearchToolBar extends Toolbar {
     private LayoutInflater mInflater;
     private EditText mSearchView;
     private TextView mTitleView;
-    private ImageButton mRightImageBtn;
+    private Button mRightImageBtn;
     private View mToolbarContentView;
-    private ImageButton mLeftImageBtn;
+    private Button mLeftImageBtn;
     private boolean isShowSearchView;
     private Drawable mRightIcon;
     private Drawable mLeftIcon;
@@ -84,8 +84,8 @@ public class SearchToolBar extends Toolbar {
             mToolbarContentView = mInflater.inflate(R.layout.toolbar_tab, null);
             mSearchView = (EditText) mToolbarContentView.findViewById(R.id.toolbar_search_et);
             mTitleView = (TextView) mToolbarContentView.findViewById(R.id.toolbar_title_tv);
-            mRightImageBtn = (ImageButton) mToolbarContentView.findViewById(R.id.toolbar_rightButton);
-            mLeftImageBtn = (ImageButton) mToolbarContentView.findViewById(R.id.toolbar_leftButton);
+            mRightImageBtn = (Button) mToolbarContentView.findViewById(R.id.toolbar_rightButton);
+            mLeftImageBtn = (Button) mToolbarContentView.findViewById(R.id.toolbar_leftButton);
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
             addView(mToolbarContentView, lp);
         }
@@ -107,24 +107,16 @@ public class SearchToolBar extends Toolbar {
 
     public void setRightButtonIcon(Drawable rightButtonIcon) {
         if (mRightImageBtn != null) {
-            mRightImageBtn.setImageDrawable(rightButtonIcon);
+            mRightImageBtn.setBackground(rightButtonIcon);
             mRightImageBtn.setVisibility(VISIBLE);
         }
     }
 
     public void setLeftButtonIcon(Drawable leftButtonIcon) {
         if (mLeftImageBtn != null) {
-            mLeftImageBtn.setImageDrawable(leftButtonIcon);
+            mLeftImageBtn.setBackground(leftButtonIcon);
         }
     }
-
-//    public interface onToolbarLeftButtonClickListener {
-//        void onClick();
-//    }
-//
-//    public interface onToolbarRightButtonClickListener {
-//        void onClick();
-//    }
 
     private onToolbarLeftButtonClickListener mLeftButtonClickListener;
 
@@ -159,18 +151,20 @@ public class SearchToolBar extends Toolbar {
         hideRightButton();
     }
 
-    private void setHideSearchView() {
+    public void setHideSearchView() {
         hideSearchView();
         showTitleView();
-        hideLeftButton();
-        hideRightButton();
+        showLeftButton();
+        showRightButton();
     }
 
     public void showSearchView() {
+        isShowSearchView = true;
         mSearchView.setVisibility(VISIBLE);
     }
 
     public void hideSearchView() {
+        isShowSearchView = false;
         mSearchView.setVisibility(GONE);
     }
 

@@ -1,6 +1,7 @@
 package com.zfy.simplemall.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
@@ -30,7 +31,9 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> {
         TextView tvPrice = holder.getView(R.id.id_price_tv);
         SimpleDraweeView draweeView = holder.getView(R.id.id_drawee_view);
         CartItemCombinationLayout clControl = holder.getView(R.id.id_num_control);
-
-
+        tvTitle.setText(shoppingCart.getName());
+        tvPrice.setText("$" + shoppingCart.getPrice());
+        draweeView.setImageURI(Uri.parse(shoppingCart.getImgUrl()));
+        clControl.setValue(shoppingCart.getCount());
     }
 }

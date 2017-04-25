@@ -11,6 +11,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.orhanobut.logger.Logger;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.bean.TabBean;
 import com.zfy.simplemall.fragment.CartFragment;
@@ -42,19 +43,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void intiView() {
-        mToolBar= (SearchToolBar) findViewById(R.id.search_tool_bar);
+        mToolBar = (SearchToolBar) findViewById(R.id.search_tool_bar);
         mToolBar.setLeftButtonOnClickListener(new onToolbarLeftButtonClickListener() {
             @Override
             public void onClick() {
-                Toast.makeText(MainActivity.this,"LeftButtonOnClick",Toast.LENGTH_SHORT).show();
-                mToolBar.showSearchView();
-                mToolBar.hideTitleView();
+                Toast.makeText(MainActivity.this, "LeftButtonOnClick", Toast.LENGTH_SHORT).show();
+                // TODO: 2017/4/25/025 Toolbar左侧按钮的点击事件
+
             }
         });
         mToolBar.setRightButtonOnClickListener(new onToolbarRightButtonClickListener() {
             @Override
             public void onClick() {
-                Toast.makeText(MainActivity.this,"RightButtonOnClick",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "RightButtonOnClick", Toast.LENGTH_SHORT).show();
+                // TODO: 2017/4/25/025 Toolbar右侧按钮的点击事件
 
             }
         });
@@ -84,6 +86,18 @@ public class MainActivity extends AppCompatActivity {
 
             mTabHost.addTab(tabSpec, tab.getFragment(), null);
         }
+        //监听tab的切换，以便于根据不同的tab相应的操作Toolbar
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                Logger.d("tabId:" + tabId);
+                if (tabId.equals(getString(R.string.cart))) {
+                    mToolBar.setHideSearchView();
+                } else {
+                    mToolBar.setShowSearchView();
+                }
+            }
+        });
         //去掉Tab之间的分割线
         mTabHost.getTabWidget().setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
         //默认选择第1个
