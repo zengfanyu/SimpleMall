@@ -37,7 +37,14 @@ public class CartFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCartContentView = inflater.inflate(R.layout.fragment_cart, container, false);
+        if (mCartContentView == null) {
+            mCartContentView = inflater.inflate(R.layout.fragment_cart, container, false);
+        }
+        ViewGroup parent = (ViewGroup) mCartContentView.getParent();
+        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
+        if (parent != null) {
+            parent.removeView(mCartContentView);
+        }
         initViews();
         return mCartContentView;
     }
@@ -45,7 +52,6 @@ public class CartFragment extends BaseFragment {
     @Override
     public void initViews() {
         mCartProvider = new CartProvider(getContext());
-        // TODO: 2017/4/21/021 业务逻辑处理
         initView();
         showData();
     }
@@ -71,9 +77,14 @@ public class CartFragment extends BaseFragment {
         super.onAttach(context);
         if (context instanceof MainActivity) {
             MainActivity mainActivity = (MainActivity) context;
-            mToolBar= (SearchToolBar) mainActivity.findViewById(R.id.search_tool_bar);
+            mToolBar = (SearchToolBar) mainActivity.findViewById(R.id.search_tool_bar);
             mToolBar.setTitle("购物车");
 
         }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCartContentView = null;
     }
 }

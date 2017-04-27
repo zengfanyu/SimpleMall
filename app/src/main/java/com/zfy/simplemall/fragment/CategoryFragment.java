@@ -69,7 +69,14 @@ public class CategoryFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCategoryContentView = inflater.inflate(R.layout.fragment_category, container, false);
+        if (mCategoryContentView == null) {
+            mCategoryContentView = inflater.inflate(R.layout.fragment_category, container, false);
+        }
+        ViewGroup parent = (ViewGroup) mCategoryContentView.getParent();
+        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
+        if (parent != null) {
+            parent.removeView(mCategoryContentView);
+        }
         initViews();
         return mCategoryContentView;
     }
@@ -273,5 +280,11 @@ public class CategoryFragment extends BaseFragment {
     public void onDestroy() {
         mSliderLayout.stopAutoCycle();
         super.onDestroy();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mCategoryContentView = null;
     }
 }

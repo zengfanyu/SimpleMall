@@ -14,14 +14,30 @@ import com.zfy.simplemall.R;
  */
 
 public class MineFragment extends BaseFragment {
+    private View mMineContentView;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_mine, container, false);
+
+        if (mMineContentView == null) {
+            mMineContentView = inflater.inflate(R.layout.fragment_mine, container, false);
+        }
+        ViewGroup parent = (ViewGroup) mMineContentView.getParent();
+        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
+        if (parent != null) {
+            parent.removeView(mMineContentView);
+        }
+        return mMineContentView;
     }
 
     @Override
     public void initViews() {
 
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mMineContentView = null;
     }
 }

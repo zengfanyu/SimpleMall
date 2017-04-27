@@ -37,7 +37,7 @@ import java.util.Map;
 
 public class HotFragment extends BaseFragment {
 
-    private View mHotContentView;
+    protected View mHotContentView;
     private int curPage = 1; //此处两个字段是要写进url中的，所以不能使用m
     private int pageSize = 10;
     private RecyclerView mRecyclerView;
@@ -50,7 +50,14 @@ public class HotFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mHotContentView = inflater.inflate(R.layout.fragment_hot, container, false);
+        if (mHotContentView == null) {
+            mHotContentView = inflater.inflate(R.layout.fragment_hot, container, false);
+        }
+        ViewGroup parent = (ViewGroup) mHotContentView.getParent();
+        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
+        if (parent != null) {
+            parent.removeView(mHotContentView);
+        }
         initViews();
         return mHotContentView;
     }
@@ -164,5 +171,11 @@ public class HotFragment extends BaseFragment {
 
         }
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mHotContentView = null;
     }
 }
