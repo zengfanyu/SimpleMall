@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:checked="true"
-        android:clickable="true"/>
+        android:clickable="false"/>
 
 
     <LinearLayout
@@ -62,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                app:maxValue="10"
                 app:minValue="1"
                 />
 

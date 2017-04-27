@@ -1,6 +1,7 @@
 package com.zfy.simplemall.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -11,7 +12,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.orhanobut.logger.Logger;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.bean.TabBean;
 import com.zfy.simplemall.fragment.CartFragment;
@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private LayoutInflater mInflater;
     private List<TabBean> mTabs = new ArrayList<>(5);
     private SearchToolBar mToolBar;
+    private CartFragment mCartFragment;
 
     //1.使用FragmentTabHost需要Activity继承FragmentActivity，AppCompatActivity已经继承了FragmentActivity
     @Override
@@ -90,10 +91,21 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                Logger.d("tabId:" + tabId);
                 if (tabId.equals(getString(R.string.cart))) {
+                    //在购物车页面需要隐藏Toolbar的搜索栏
                     mToolBar.setHideSearchView();
+
+                    if (mCartFragment == null) {
+                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
+                        if (fragment != null) {
+                            mCartFragment = (CartFragment) fragment;
+                            mCartFragment.refreshData();
+                        }
+                    } else {
+                        mCartFragment.refreshData();
+                    }
                 } else {
+                    //在其他页面显示Toolbar的搜索栏
                     mToolBar.setShowSearchView();
                 }
             }

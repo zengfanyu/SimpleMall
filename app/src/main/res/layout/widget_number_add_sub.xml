@@ -8,7 +8,7 @@
               android:padding="5dp">
 
     <Button
-        android:id="@+id/id_add_btn"
+        android:id="@+id/id_sub_btn"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:background="@drawable/selector_bg_btn_white"
@@ -27,7 +27,7 @@
         android:textColor="@color/black"/>
 
     <Button
-        android:id="@+id/id_sub_btn"
+        android:id="@+id/id_add_btn"
         android:layout_width="50dp"
         android:layout_height="30dp"
         android:background="@drawable/selector_bg_btn_white"

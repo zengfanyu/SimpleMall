@@ -8,7 +8,7 @@
     </declare-styleable>
     <!--购物车中控件的自定义属性-->
     <declare-styleable name="CartItemCombinationLayout">
-        <attr name="value" format="integer|reference"/>
+        <attr name="currentValue" format="integer|reference"/>
         <attr name="maxValue" format="integer|reference"/>
         <attr name="minValue" format="integer|reference"/>
         <attr name="btnDrawable" format="reference"/>

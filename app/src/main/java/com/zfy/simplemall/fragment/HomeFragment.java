@@ -14,9 +14,9 @@ import com.daimajia.slider.library.Indicators.PagerIndicator;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.adapter.BaseAdapter;
+import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.adapter.HCAdapter;
 import com.zfy.simplemall.bean.BannerBean;
 import com.zfy.simplemall.bean.HomeCampaignBean;
@@ -150,6 +150,7 @@ public class HomeFragment extends BaseFragment {
         mSliderLayout.stopAutoCycle();
         super.onDestroy();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

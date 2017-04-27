@@ -33,6 +33,9 @@ public class CartFragment extends BaseFragment {
     private CartProvider mCartProvider;
     private RecyclerView mRvCart;
     private SearchToolBar mToolBar;
+    private CheckBox mCbAll;
+    private TextView mTvTotal;
+    private CartAdapter mAdapter;
 
     @Nullable
     @Override
@@ -58,16 +61,18 @@ public class CartFragment extends BaseFragment {
 
     private void initView() {
         mRvCart = (RecyclerView) mCartContentView.findViewById(R.id.id_recyclerView);
-        CheckBox cbAll = (CheckBox) mCartContentView.findViewById(R.id.id_all_cb);
-        TextView tvTotal = (TextView) mCartContentView.findViewById(R.id.id_total_tv);
+        mCbAll = (CheckBox) mCartContentView.findViewById(R.id.id_all_cb);
+        mTvTotal = (TextView) mCartContentView.findViewById(R.id.id_total_tv);
         Button btnOrder = (Button) mCartContentView.findViewById(R.id.id_order_btn);
         Button btnDel = (Button) mCartContentView.findViewById(R.id.id_del_btn);
     }
 
     private void showData() {
-        List<ShoppingCart> carts = mCartProvider.getAll();
-        CartAdapter adapter = new CartAdapter(carts, getContext(), R.layout.cart_item);
-        mRvCart.setAdapter(adapter);
+        final List<ShoppingCart> carts = mCartProvider.getAll();
+        mAdapter = new CartAdapter(carts, getContext(), R.layout.cart_item);
+        mAdapter.setCbAll(mCbAll);
+        mAdapter.setTvTotal(mTvTotal);
+        mRvCart.setAdapter(mAdapter);
         mRvCart.setLayoutManager(new LinearLayoutManager(getContext()));
         mRvCart.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
     }
@@ -81,6 +86,12 @@ public class CartFragment extends BaseFragment {
             mToolBar.setTitle("购物车");
 
         }
+    }
+    public void refreshData(){
+        mAdapter.clearData();
+        List<ShoppingCart> carts = mCartProvider.getAll();
+        mAdapter.addData(carts);
+        mAdapter.showTotalPrice();
     }
     @Override
     public void onDestroyView() {

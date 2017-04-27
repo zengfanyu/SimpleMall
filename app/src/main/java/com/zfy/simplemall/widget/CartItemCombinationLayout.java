@@ -3,7 +3,6 @@ package com.zfy.simplemall.widget;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.TintTypedArray;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ public class CartItemCombinationLayout extends LinearLayout implements View.OnCl
     private Button mAddButton;
     private Button mSubButton;
     private TextView mNumTextView;
-    private int value;
+    private int mCurrentValue;
     private int minValue;
     private int maxValue;
     private onButtonClickListener mListener;
@@ -49,7 +48,7 @@ public class CartItemCombinationLayout extends LinearLayout implements View.OnCl
         if (attrs != null) {
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.CartItemCombinationLayout, defStyleAttr, 0);
-            value = a.getInteger(R.styleable.CartItemCombinationLayout_value, 1);
+            mCurrentValue = a.getInteger(R.styleable.CartItemCombinationLayout_currentValue, 1);
             maxValue = a.getInteger(R.styleable.CartItemCombinationLayout_maxValue, 1);
             minValue = a.getInteger(R.styleable.CartItemCombinationLayout_minValue, 1);
             Drawable btnBgDrawable = a.getDrawable(R.styleable.CartItemCombinationLayout_btnDrawable);
@@ -75,66 +74,45 @@ public class CartItemCombinationLayout extends LinearLayout implements View.OnCl
         mSubButton.setOnClickListener(this);
     }
 
-    public int getValue() {
-        String val = mNumTextView.getText().toString();
-        if (!TextUtils.isEmpty(val)) {
-            this.value = Integer.parseInt(val);
-        }
 
-        return value;
+    public void setCurrentValue(int currentValue) {
+        this.mCurrentValue = currentValue;
     }
 
-    public void setValue(int value) {
-        mNumTextView.setText(value + "");
-        this.value = value;
-    }
-
-    public int getMinValue() {
-        return minValue;
-    }
-
-    public void setMinValue(int minValue) {
-        this.minValue = minValue;
-    }
-
-    public int getMaxValue() {
-        return maxValue;
-    }
-
-    public void setMaxValue(int maxValue) {
-        this.maxValue = maxValue;
-    }
 
     @Override
     public void onClick(View v) {
-
         if (v.getId() == R.id.id_add_btn) {
             numberAdd();
             if (mListener != null) {
-                mListener.onButtonAddClick(v, value);
+                mListener.onButtonAddClick(v, mCurrentValue);
             }
         } else if (v.getId() == R.id.id_sub_btn) {
             numberSub();
             if (mListener != null) {
-                mListener.onButtonSubClick(v, value);
+                mListener.onButtonSubClick(v, mCurrentValue);
             }
         }
     }
 
     private void numberAdd() {
-        getValue();
-        if (value < maxValue) {
-            ++value;
+        String strVal = mNumTextView.getText().toString();
+        int val = Integer.parseInt(strVal);
+        if (val < maxValue) {
+            ++val;
+            setCurrentValue(val);
+            mNumTextView.setText(val + "");
         }
-        mNumTextView.setText(value + "");
     }
 
     private void numberSub() {
-        getValue();
-        if (value > minValue) {
-            --value;
+        String strVal = mNumTextView.getText().toString();
+        int val = Integer.parseInt(strVal);
+        if (val > minValue) {
+            --val;
+            setCurrentValue(val);
+            mNumTextView.setText(val + "");
         }
-        mNumTextView.setText(value + "");
     }
 
     public interface onButtonClickListener {

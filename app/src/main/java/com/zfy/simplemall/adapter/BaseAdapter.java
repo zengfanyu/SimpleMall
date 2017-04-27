@@ -18,6 +18,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     protected Context mContext;
     protected int mLayoutId;
     protected onItemClickListener mListener;
+    protected int position=-1;
 
     public BaseAdapter(List<T> datas, Context context, int layoutId) {
         this.mDatas = datas;
@@ -37,6 +38,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
         T t = mDatas.get(position);
+        setPosition(position);
         bindData(holder, t);
     }
 
@@ -71,6 +73,14 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             mDatas.addAll(datas);//先添加数据
             notifyItemRangeChanged(position, mDatas.size());//再通知刷新
         }
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     /**
