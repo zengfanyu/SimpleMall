@@ -72,7 +72,7 @@ public class SearchToolBar extends Toolbar {
             @Override
             public void onClick(View v) {
                 if (mRightButtonClickListener != null) {
-                    mRightButtonClickListener.onClick();
+                    mRightButtonClickListener.onClick(v);
                 }
             }
         });
@@ -128,6 +128,20 @@ public class SearchToolBar extends Toolbar {
 
     public void setLeftButtonOnClickListener(onToolbarLeftButtonClickListener listener) {
         mLeftButtonClickListener = listener;
+    }
+
+    public Button getLeftButton() {
+        if (mLeftImageBtn != null) {
+            return mLeftImageBtn;
+        }
+        return null;
+    }
+
+    public Button getRightButton() {
+        if (mRightImageBtn != null) {
+            return mRightImageBtn;
+        }
+        return null;
     }
 
     //重写Toolbar的setTitle方法

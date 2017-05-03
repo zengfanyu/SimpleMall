@@ -29,6 +29,7 @@
             android:id="@+id/id_drawee_view"
             android:layout_width="120dp"
             android:layout_height="120dp"
+            android:clickable="false"
             />
 
 

@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.bean.TabBean;
@@ -19,8 +18,6 @@ import com.zfy.simplemall.fragment.CategoryFragment;
 import com.zfy.simplemall.fragment.HomeFragment;
 import com.zfy.simplemall.fragment.HotFragment;
 import com.zfy.simplemall.fragment.MineFragment;
-import com.zfy.simplemall.listener.onToolbarLeftButtonClickListener;
-import com.zfy.simplemall.listener.onToolbarRightButtonClickListener;
 import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.util.ArrayList;
@@ -45,22 +42,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void intiView() {
         mToolBar = (SearchToolBar) findViewById(R.id.search_tool_bar);
-        mToolBar.setLeftButtonOnClickListener(new onToolbarLeftButtonClickListener() {
-            @Override
-            public void onClick() {
-                Toast.makeText(MainActivity.this, "LeftButtonOnClick", Toast.LENGTH_SHORT).show();
-                // TODO: 2017/4/25/025 Toolbar左侧按钮的点击事件
-
-            }
-        });
-        mToolBar.setRightButtonOnClickListener(new onToolbarRightButtonClickListener() {
-            @Override
-            public void onClick() {
-                Toast.makeText(MainActivity.this, "RightButtonOnClick", Toast.LENGTH_SHORT).show();
-                // TODO: 2017/4/25/025 Toolbar右侧按钮的点击事件
-
-            }
-        });
+//        mToolBar.setLeftButtonOnClickListener(new onToolbarLeftButtonClickListener() {
+//            @Override
+//            public void onClick() {
+//                Toast.makeText(MainActivity.this, "LeftButtonOnClick", Toast.LENGTH_SHORT).show();
+//                // TODO: 2017/4/25/025 Toolbar左侧按钮的点击事件
+//
+//            }
+//        });
+//        mToolBar.setRightButtonOnClickListener(new onToolbarRightButtonClickListener() {
+//            @Override
+//            public void onClick() {
+//                Toast.makeText(MainActivity.this, "RightButtonOnClick", Toast.LENGTH_SHORT).show();
+//                // TODO: 2017/4/25/025 Toolbar右侧按钮的点击事件
+//
+//            }
+//        });
     }
 
     private void initTab() {

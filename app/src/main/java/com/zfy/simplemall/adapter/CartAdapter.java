@@ -12,6 +12,7 @@ import com.zfy.simplemall.bean.ShoppingCart;
 import com.zfy.simplemall.utils.CartProvider;
 import com.zfy.simplemall.widget.CartItemCombinationLayout;
 
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -119,5 +120,38 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> implements BaseAdapte
         mCartProvider.update(cart);
         notifyItemChanged(position);
         mCbAll.setChecked(isAllChecked());
+    }
+
+    public void setAllCheck(boolean isCheck) {
+        for (ShoppingCart data : mDatas) {
+            data.setChecked(isCheck);
+        }
+        mCbAll.setChecked(isAllChecked());
+        notifyItemRangeChanged(0, mDatas.size());
+
+    }
+
+    public void deleteItemData() {
+        Iterator<ShoppingCart> iterator = mDatas.iterator();
+        while (iterator.hasNext()) {
+            ShoppingCart cart = iterator.next();
+            if (cart.isChecked()) {
+                int position = mDatas.indexOf(cart);
+                mCartProvider.delete(cart);
+                iterator.remove();
+                notifyItemRemoved(position);
+
+            }
+        }
+
+      /* 这种删除方法会报错
+      for (ShoppingCart cart : mDatas) {
+            if (cart.isChecked()) {
+                int position = mDatas.indexOf(cart);
+                mCartProvider.delete(cart);
+                mDatas.remove(position);
+                notifyItemRemoved(position);
+            }
+        }*/
     }
 }

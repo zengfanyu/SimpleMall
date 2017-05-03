@@ -17,7 +17,9 @@ import com.zfy.simplemall.activity.MainActivity;
 import com.zfy.simplemall.adapter.CartAdapter;
 import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.bean.ShoppingCart;
+import com.zfy.simplemall.listener.onToolbarRightButtonClickListener;
 import com.zfy.simplemall.utils.CartProvider;
+import com.zfy.simplemall.utils.toastutils.ToastUtils;
 import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.util.List;
@@ -27,7 +29,7 @@ import java.util.List;
  * Created by zfy on 2017/4/8.
  */
 
-public class CartFragment extends BaseFragment {
+public class CartFragment extends BaseFragment implements onToolbarRightButtonClickListener, View.OnClickListener {
 
     private View mCartContentView;
     private CartProvider mCartProvider;
@@ -36,6 +38,12 @@ public class CartFragment extends BaseFragment {
     private CheckBox mCbAll;
     private TextView mTvTotal;
     private CartAdapter mAdapter;
+    //Toolbar右边按钮的状态值
+    public static final int ACTION_EDIT = 1;
+    public static final int ACTION_COMPLETE = 2;
+    private Button mToolBarRightButton;
+    private Button mBtnOrder;
+    private Button mBtnDel;
 
     @Nullable
     @Override
@@ -63,8 +71,9 @@ public class CartFragment extends BaseFragment {
         mRvCart = (RecyclerView) mCartContentView.findViewById(R.id.id_recyclerView);
         mCbAll = (CheckBox) mCartContentView.findViewById(R.id.id_all_cb);
         mTvTotal = (TextView) mCartContentView.findViewById(R.id.id_total_tv);
-        Button btnOrder = (Button) mCartContentView.findViewById(R.id.id_order_btn);
-        Button btnDel = (Button) mCartContentView.findViewById(R.id.id_del_btn);
+        mBtnOrder = (Button) mCartContentView.findViewById(R.id.id_order_btn);
+        mBtnDel = (Button) mCartContentView.findViewById(R.id.id_del_btn);
+        mBtnDel.setOnClickListener(this);
     }
 
     private void showData() {
@@ -84,18 +93,63 @@ public class CartFragment extends BaseFragment {
             MainActivity mainActivity = (MainActivity) context;
             mToolBar = (SearchToolBar) mainActivity.findViewById(R.id.search_tool_bar);
             mToolBar.setTitle("购物车");
+            mToolBarRightButton = mToolBar.getRightButton();
+            mToolBarRightButton.setText("编辑");
+            mToolBarRightButton.setTag(ACTION_EDIT);
+            mToolBar.setRightButtonOnClickListener(this);
 
         }
     }
-    public void refreshData(){
+
+    public void refreshData() {
         mAdapter.clearData();
         List<ShoppingCart> carts = mCartProvider.getAll();
         mAdapter.addData(carts);
         mAdapter.showTotalPrice();
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         mCartContentView = null;
+    }
+
+
+    private void hideDeleteBtn() {
+        mToolBarRightButton.setText("编辑");
+        mTvTotal.setVisibility(View.VISIBLE);
+        mBtnOrder.setVisibility(View.VISIBLE);
+        mBtnDel.setVisibility(View.GONE);
+        mToolBarRightButton.setTag(ACTION_EDIT);
+        mAdapter.setAllCheck(true);
+    }
+
+    private void showDeleteBtn() {
+        mToolBarRightButton.setText("完成");
+        mTvTotal.setVisibility(View.GONE);
+        mBtnOrder.setVisibility(View.GONE);
+        mBtnDel.setVisibility(View.VISIBLE);
+        mToolBarRightButton.setTag(ACTION_COMPLETE);
+        mAdapter.setAllCheck(false);
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        ToastUtils.showToast(getContext(), "ToolbarRightButton");
+        switch (view.getId()) {
+            case R.id.toolbar_rightButton:
+                int tag = (int) mToolBarRightButton.getTag();
+                if (tag == ACTION_EDIT) {
+                    showDeleteBtn();
+                } else if (tag == ACTION_COMPLETE) {
+                    hideDeleteBtn();
+                }
+                break;
+            case R.id.id_del_btn:
+                mAdapter.deleteItemData();
+                hideDeleteBtn();
+                break;
+        }
     }
 }

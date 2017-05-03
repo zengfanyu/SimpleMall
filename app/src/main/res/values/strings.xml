@@ -8,4 +8,7 @@
     <string name="please_input_search_content">请输入搜索内容</string>
     <string name="hot_activities">热门活动</string>
     <string name="by_now">立即购买</string>
+    <string name="total">合计</string>
+    <string name="account">去结算</string>
+    <string name="delete">删除</string>
 </resources>
