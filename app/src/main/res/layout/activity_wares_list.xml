@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/bg_color"
+              android:orientation="vertical">
+
+    <com.zfy.simplemall.widget.SearchToolBar
+        android:id="@+id/id_search_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="35dp"
+        app:isShowSearchView="false"
+        app:leftButtonIcon="@drawable/icon_back_32px"
+        app:rightButtonIcon="@drawable/icon_grid_32"
+        app:title="商品"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/id_tablayout"
+        style="@style/customTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/goldyellow"
+        android:gravity="center_vertical"
+        android:minHeight="30dp"
+        android:padding="5dp">
+
+
+        <TextView
+            android:id="@+id/id_summary_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray"/>
+
+
+    </LinearLayout>
+
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/id_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:overlay="false"
+        app:progress_colors="@array/material_colors"
+        app:wave_color="#90ffffff"
+        app:wave_height_type="higher"
+        app:wave_show="false"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/id_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+
+    </com.cjj.MaterialRefreshLayout>
+
+</LinearLayout>

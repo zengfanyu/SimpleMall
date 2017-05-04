@@ -1,5 +1,6 @@
 package com.zfy.simplemall.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.zfy.simplemall.R;
+import com.zfy.simplemall.activity.WaresListActivity;
 import com.zfy.simplemall.adapter.BaseAdapter;
 import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.adapter.HCAdapter;
@@ -111,6 +113,11 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onClick(View view, int position) {
                 ToastUtils.showToast(getContext(), mHomeCampaignBeen.get(position).getTitle());
+                Intent intent = new Intent(getActivity(), WaresListActivity.class);
+                intent.putExtra(Constant.EXTRA_CAMPAIGN_ID, mHomeCampaignBeen.get(position).getId());
+                intent.putExtra(Constant.EXTRA_CAMPAIGN_NAME, mHomeCampaignBeen.get(position).getTitle());
+                startActivity(intent);
+
             }
         });
         recyclerView.setAdapter(adapter);

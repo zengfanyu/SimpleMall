@@ -112,6 +112,10 @@ public class SearchToolBar extends Toolbar {
         }
     }
 
+    public void setRightButtonIcon(int iconId) {
+        setRightButtonIcon(getResources().getDrawable(iconId));
+    }
+
     public void setLeftButtonIcon(Drawable leftButtonIcon) {
         if (mLeftImageBtn != null) {
             mLeftImageBtn.setBackground(leftButtonIcon);

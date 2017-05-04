@@ -40,14 +40,16 @@ public class HWAdapter extends BaseAdapter<Wares> {
         draweeView.setImageURI(Uri.parse(wares.getImgUrl()));
         tvPrice.setText(wares.getPrice() + "");
         tvTitle.setText(wares.getName());
-        btnBuy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //在此处点击立即购买按钮，就添加到购物车中
-                mCartProvider.put(convertData(wares));
-                ToastUtils.showToast(mContext, "已添加至购物车");
-            }
-        });
+        if (btnBuy != null) {
+            btnBuy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //在此处点击立即购买按钮，就添加到购物车中
+                    mCartProvider.put(convertData(wares));
+                    ToastUtils.showToast(mContext, "已添加至购物车");
+                }
+            });
+        }
 
     }
 
@@ -64,5 +66,10 @@ public class HWAdapter extends BaseAdapter<Wares> {
         cart.setId(item.getId());
         return cart;
 
+    }
+
+    public void resetLayout(int layoutId) {
+        this.mLayoutId = layoutId;
+        notifyDataSetChanged();
     }
 }

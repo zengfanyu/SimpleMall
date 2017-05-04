@@ -20,9 +20,7 @@ import com.zfy.simplemall.listener.onPageListener;
 import com.zfy.simplemall.utils.PageUtils;
 import com.zfy.simplemall.utils.toastutils.ToastUtils;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 热卖 Tab Fragment
@@ -55,13 +53,10 @@ public class HotFragment extends BaseFragment implements onPageListener {
     @Override
     public void initViews() {
         initView();
-        Map<String, String> paramsMap = new HashMap<>();
-        paramsMap.put("curPage", "1");
-        paramsMap.put("pageSize", "10");
+
 
         PageUtils.Builder()
                 .setUrl(Constant.URL_HOT_WARES)
-                .setRequestParams(paramsMap)
                 .setRefreshLayout(mRefreshLayout)
                 .setLoadMore(true)
                 .setListener(this)

@@ -9,9 +9,10 @@
     <color name="black">#FF000000</color>
     <color name="bg_color">#f1f1f1</color>
     <color name="white_disable">#7fffffff</color>
-    <color name="darkgray">#a9a9a9</color>
+    <color name="darkgrey">#a9a9a9</color>
     <color name="gray">#d3d3d3</color>
     <color name="crimson">#dc143c</color>
+    <color name="goldyellow">#ff9428</color>
 
     <color name="red_btn_color_disable">#7fff5454</color>
     <color name="red_btn_color_normal">#ffff5454</color>

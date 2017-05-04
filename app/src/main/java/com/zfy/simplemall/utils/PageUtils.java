@@ -41,6 +41,10 @@ public class PageUtils {
         return sBuilder;
     }
 
+    public void updateParamsAndRequest() {
+        requestData();
+    }
+
     /**
      * 初始化refreshLayout
      */
@@ -72,7 +76,6 @@ public class PageUtils {
     private void refreshData() {
         sBuilder.curPage = 1;
         state = Constant.STATE_REFRESH;
-        updateRequestParams();
         requestData();
     }
 
@@ -82,7 +85,6 @@ public class PageUtils {
     private void loadMoreData() {
         sBuilder.curPage = ++sBuilder.curPage;
         state = Constant.STATE_MORE;
-        updateRequestParams();
         requestData();
     }
 
@@ -90,7 +92,7 @@ public class PageUtils {
      * 更新请求参数的方法
      */
     private void updateRequestParams() {
-        Map<String, String> paramsMap = new HashMap<>();
+        Map<String, String> paramsMap = sBuilder.params;
         paramsMap.put("curPage", sBuilder.curPage + "");
         paramsMap.put("pageSize", sBuilder.pageSize + "");
         sBuilder.setRequestParams(paramsMap);
@@ -100,6 +102,7 @@ public class PageUtils {
      * 请求服务端数据的方法
      */
     private void requestData() {
+        updateRequestParams();
 
         CommonOkHttpClient.get(CommonRequest.createGetRequest(sBuilder.url,
                 sBuilder.requestParams), new DisposeDataHandle(new DisposeDataListener() {
@@ -167,6 +170,12 @@ public class PageUtils {
         private boolean isLoadMore;
         private onPageListener listener;
         private Context context;
+        private HashMap<String, String> params = new HashMap<>(5);
+
+        public Builder addParam(String key, String value) {
+            params.put(key, value);
+            return this;
+        }
 
         public Builder setListener(onPageListener listener) {
             this.listener = listener;
