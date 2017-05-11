@@ -4,10 +4,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.bean.Wares;
@@ -33,6 +37,7 @@ public class WareDetailActivity extends AppCompatActivity implements onToolbarLe
     private WebAppInterface mWebAppInterface;
     private Wares mWares;
     private CartProvider mCartProvider;
+    private FrameLayout mContainer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,13 +53,30 @@ public class WareDetailActivity extends AppCompatActivity implements onToolbarLe
         initWebView();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        mWebView.saveState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mWebView.restoreState(savedInstanceState);
+    }
+
     private void initToolBar() {
         mToolBar = (SearchToolBar) findViewById(R.id.id_tool_bar);
         mToolBar.setLeftButtonOnClickListener(this);
     }
 
     private void initWebView() {
-        mWebView = (WebView) findViewById(R.id.id_web_view);
+        mContainer = (FrameLayout) findViewById(R.id.id_webView_container);
+        mWebView = new WebView(getApplication());
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        mWebView.setLayoutParams(params);
+        mContainer.addView(mWebView);
         WebSettings settings = mWebView.getSettings();
         //开启JavaScript脚本功能
         settings.setJavaScriptEnabled(true);
@@ -73,12 +95,27 @@ public class WareDetailActivity extends AppCompatActivity implements onToolbarLe
         finish();
     }
 
+    /**
+     * 主要用于辅助WebView处理各种通知和请求的类
+     *
+     * @author zfy
+     * @created at 2017/5/11/011 12:12
+     */
     class DetailWebViewClient extends WebViewClient {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mWebAppInterface.showDetail();
+            // TODO: 2017/5/11/011 加载完成，在此处关闭loading弹窗
         }
+
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            view.loadUrl(request.getUrl().toString());
+            return false;
+        }
+
     }
 
     class WebAppInterface {
@@ -132,5 +169,15 @@ public class WareDetailActivity extends AppCompatActivity implements onToolbarLe
         public void addToCart(int id) {
 
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mContainer.removeView(mWebView);
+        mWebView.stopLoading();
+        mWebView.removeAllViews();
+        mWebView.destroy();
+        mWebView = null;
     }
 }

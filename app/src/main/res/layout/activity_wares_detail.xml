@@ -15,10 +15,10 @@
         app:leftButtonIcon="@drawable/icon_back_32px"
         app:title="商品详情"/>
 
-    <WebView
-        android:id="@+id/id_web_view"
+    <FrameLayout
+        android:id="@+id/id_webView_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+    </FrameLayout>
 
-    </WebView>
 </LinearLayout>
