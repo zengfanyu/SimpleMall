@@ -22,13 +22,16 @@ public class Constant {
     public static final String URL_CATEGORY_LIST = URL_BASE + "category/list";
     //http://112.124.22.238:8081/course_api/wares/campaign/list?campaignId=1&orderBy=0&curPage=1&pageSize=10
     public static final String URL_WARES_CAMPAIGN_LIST = URL_BASE + "wares/campaign/list";
+    //http://112.124.22.238:8081/course_api/wares/detail.html
+    public static final String URL_WARE_DETAIL = "http://112.124.22.238:8081/course_api/wares/detail.html";
 
     public static final String EXTRA_CAMPAIGN_ID = "campaign_id";
     public static final String EXTRA_CAMPAIGN_NAME = "campaign_name";
+    public static final String EXTRA_WARE_NAME = "ware_name";
 
-    public static final int TAB_TYPE_DEFAULT=0;
-    public static final int TAB_TYPE_SALES=1;
-    public static final int TAB_TYPE_PRICE =2;
+    public static final int TAB_TYPE_DEFAULT = 0;
+    public static final int TAB_TYPE_SALES = 1;
+    public static final int TAB_TYPE_PRICE = 2;
 
     public static final int TYPE_LIST = 1;
     public static final int TYPE_GIRD = 2;
@@ -58,4 +61,5 @@ public class Constant {
     public static final int STATE_NORMAL = 1;
     public static final int STATE_REFRESH = 2;
     public static final int STATE_MORE = 3;
+
 }

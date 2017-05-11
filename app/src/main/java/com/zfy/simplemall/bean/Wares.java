@@ -1,12 +1,14 @@
 package com.zfy.simplemall.bean;
 
+import java.io.Serializable;
+
 /**
  * Created by ZFY on 2017/04/13.
  *
  * @function:
  */
 
-public class Wares {
+public class Wares implements Serializable {
     private Long id;
     private String name;
     private String imgUrl;

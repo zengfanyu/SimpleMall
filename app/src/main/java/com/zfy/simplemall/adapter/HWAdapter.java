@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.zfy.simplemall.R;
-import com.zfy.simplemall.bean.ShoppingCart;
 import com.zfy.simplemall.bean.Wares;
 import com.zfy.simplemall.utils.CartProvider;
+import com.zfy.simplemall.utils.TypeCastUtils;
 import com.zfy.simplemall.utils.toastutils.ToastUtils;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class HWAdapter extends BaseAdapter<Wares> {
 
     public HWAdapter(List<Wares> datas, Context context, int layoutId) {
         super(datas, context, layoutId);
-        mCartProvider = new CartProvider(context);
+        mCartProvider = CartProvider.getInstance(context);
         mContext = context;
     }
 
@@ -45,7 +45,7 @@ public class HWAdapter extends BaseAdapter<Wares> {
                 @Override
                 public void onClick(View v) {
                     //在此处点击立即购买按钮，就添加到购物车中
-                    mCartProvider.put(convertData(wares));
+                    mCartProvider.put(TypeCastUtils.WaresToShoppingCart(wares));
                     ToastUtils.showToast(mContext, "已添加至购物车");
                 }
             });
@@ -53,20 +53,6 @@ public class HWAdapter extends BaseAdapter<Wares> {
 
     }
 
-    /**
-     * 将Wares转换成ShoppingCart的方法。
-     * 强制向下转型会报错
-     */
-    public ShoppingCart convertData(Wares item) {
-        ShoppingCart cart = new ShoppingCart();
-        cart.setDescription(item.getDescription());
-        cart.setImgUrl(item.getImgUrl());
-        cart.setName(item.getName());
-        cart.setPrice(item.getPrice());
-        cart.setId(item.getId());
-        return cart;
-
-    }
 
     public void resetLayout(int layoutId) {
         this.mLayoutId = layoutId;

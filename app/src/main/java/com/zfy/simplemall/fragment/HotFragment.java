@@ -1,5 +1,6 @@
 package com.zfy.simplemall.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.zfy.simplemall.R;
+import com.zfy.simplemall.activity.WareDetailActivity;
 import com.zfy.simplemall.adapter.BaseAdapter;
 import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.adapter.HWAdapter;
@@ -75,7 +77,11 @@ public class HotFragment extends BaseFragment implements onPageListener {
         mAdapter.setOnItemClickListener(new BaseAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int position) {
-                ToastUtils.showToast(getContext(), mWaresList.get(position).getName());
+                Wares wares = mWaresList.get(position);
+                ToastUtils.showToast(getContext(), wares.getName());
+                Intent intent = new Intent(getActivity(), WareDetailActivity.class);
+                intent.putExtra(Constant.EXTRA_WARE_NAME, wares);
+                startActivity(intent);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

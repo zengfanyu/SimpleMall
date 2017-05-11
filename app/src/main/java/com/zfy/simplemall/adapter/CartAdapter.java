@@ -31,7 +31,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> implements BaseAdapte
     public CartAdapter(List<ShoppingCart> datas, Context context, int layoutId) {
         super(datas, context, layoutId);
         this.mDatas = datas;
-        mCartProvider = new CartProvider(context);
+        mCartProvider = CartProvider.getInstance(context);
         setOnItemClickListener(this);
 
     }

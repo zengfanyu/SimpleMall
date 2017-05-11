@@ -16,14 +16,27 @@ import java.util.List;
  */
 
 public class CartProvider {
+    private static CartProvider sCartProvider;
+
     private SparseArray<ShoppingCart> mDatas = null;
     private Context mContext;
     private String CART_JSON = "cart_json";
 
-    public CartProvider(Context context) {
+    private CartProvider(Context context) {
         mDatas = new SparseArray<>(10);
         this.mContext = context;
         listToSparse();
+    }
+
+    public static CartProvider getInstance(Context context) {
+        if (sCartProvider == null) {
+            synchronized (CartProvider.class) {
+                if (sCartProvider == null) {
+                    sCartProvider = new CartProvider(context);
+                }
+            }
+        }
+        return sCartProvider;
     }
 
     public void put(ShoppingCart shoppingCart) {

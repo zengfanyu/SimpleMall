@@ -62,7 +62,7 @@ public class CartFragment extends BaseFragment implements onToolbarRightButtonCl
 
     @Override
     public void initViews() {
-        mCartProvider = new CartProvider(getContext());
+        mCartProvider = CartProvider.getInstance(getContext());
         initView();
         showData();
     }
