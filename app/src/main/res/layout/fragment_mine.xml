@@ -1,12 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/mine"
-        android:gravity="center"/>
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <FrameLayout
+        android:id="@+id/id_fl_login"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:background="?attr/colorPrimary"
+        android:clickable="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/id_img_head"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/img_head"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="2dp"
+            />
+
+        <TextView
+            android:id="@+id/id_tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="9dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="@string/to_login"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_my_orders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_list_item"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_list_o"
+                android:gravity="center_vertical"
+                android:padding="@dimen/largePadding"
+                android:text="@string/my_orders"
+                android:textColor="@color/black"/>
+
+            <View style="@style/line_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_list_item"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_favorite"
+                android:gravity="center_vertical"
+                android:padding="@dimen/largePadding"
+                android:text="@string/my_favorite"
+                android:textColor="@color/black"/>
+
+            <View style="@style/line_vertical"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_list_item"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_location"
+                android:gravity="center_vertical"
+                android:padding="@dimen/largePadding"
+                android:text="@string/my_addresses"
+                android:textColor="@color/black"/>
+
+            <View style="@style/line_vertical"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_list_item"
+                android:drawablePadding="20dp"
+                android:drawableStart="@drawable/icon_msg"
+                android:gravity="center_vertical"
+                android:padding="@dimen/largePadding"
+                android:text="@string/my_msg"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/btn_logout"
+                style="@style/bigRedButton"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/logout"/>
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

@@ -106,7 +106,6 @@ public class WareDetailActivity extends AppCompatActivity implements onToolbarLe
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             mWebAppInterface.showDetail();
-            // TODO: 2017/5/11/011 加载完成，在此处关闭loading弹窗
         }
 
 

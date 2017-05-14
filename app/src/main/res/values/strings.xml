@@ -11,4 +11,16 @@
     <string name="total">合计</string>
     <string name="account">去结算</string>
     <string name="delete">删除</string>
+    <string name="longin">登陆</string>
+    <string name="phone_hint">请输入手机号码</string>
+    <string name="login">登 录</string>
+    <string name="register_account">注册账号</string>
+    <string name="forget_password">忘记密码</string>
+    <string name="to_login">点击登陆</string>
+    <string name="my_orders">我的订单</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="my_addresses">我的地址</string>
+    <string name="my_msg">我的信息</string>
+    <string name="logout">退出登陆</string>
+    <string name="password_hint">请输入密码</string>
 </resources>

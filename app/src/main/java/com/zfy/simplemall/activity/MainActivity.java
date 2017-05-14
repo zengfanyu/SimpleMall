@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         mCartFragment.refreshData();
                     }
+                } else if (tabId.equals(getString(R.string.mine))) {
+                    mToolBar.hideSearchView();
+                    mToolBar.setTitle(R.string.mine);
                 } else {
                     //在其他页面显示Toolbar的搜索栏
                     mToolBar.setShowSearchView();
