@@ -6,12 +6,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zfy.simplemall.R;
 import com.zfy.simplemall.activity.LoginActivity;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.bean.User;
+import com.zfy.simplemall.config.Constant;
+import com.zfy.simplemall.config.MallApplication;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,6 +29,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView mTvUserName;
     private CircleImageView mIvImage;
     private FrameLayout mFlLogin;
+    private Button mBtnLogout;
 
     @Nullable
     @Override
@@ -45,22 +50,47 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void initViews() {
         findViews();
+        showUser(MallApplication.getInstance().getUser());
     }
 
     private void findViews() {
         mIvImage = (CircleImageView) mMineContentView.findViewById(R.id.id_img_head);
         mTvUserName = (TextView) mMineContentView.findViewById(R.id.id_tv_user_name);
         mFlLogin = (FrameLayout) mMineContentView.findViewById(R.id.id_fl_login);
+        mBtnLogout = (Button) mMineContentView.findViewById(R.id.id_btn_logout);
         mFlLogin.setClickable(true);
         mFlLogin.setOnClickListener(this);
+        mBtnLogout.setOnClickListener(this);
     }
 
 
     @Override
     public void onClick(View v) {
-        ToastUtils.showToast(getContext(), "click!");
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
-        startActivity(intent);
+        if (v.getId() == R.id.id_btn_logout) {
+            // TODO: 2017/5/15/015 清理User数据，恢复按钮为不可见，恢复默认布局
+            MallApplication.getInstance().clearUser();
+            showUser(null);
+
+        } else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivityForResult(intent, Constant.START_LOGIN_ACTIVITY_CODE);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        User user = MallApplication.getInstance().getUser();
+        showUser(user);
+    }
+
+    private void showUser(User user) {
+        if (user != null) {
+            mTvUserName.setText(user.getUsername());
+            Picasso.with(getActivity()).load(user.getLogo_url()).into(mIvImage);
+            mBtnLogout.setVisibility(View.VISIBLE);
+        } else {
+            mTvUserName.setText(R.string.to_login);
+        }
     }
 
     @Override

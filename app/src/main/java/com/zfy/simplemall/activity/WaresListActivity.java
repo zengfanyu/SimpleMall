@@ -21,7 +21,7 @@ import com.zfy.simplemall.listener.onPageListener;
 import com.zfy.simplemall.listener.onToolbarLeftButtonClickListener;
 import com.zfy.simplemall.listener.onToolbarRightButtonClickListener;
 import com.zfy.simplemall.utils.PageUtils;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.util.List;

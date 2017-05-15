@@ -19,7 +19,7 @@ import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
 import com.zfy.simplemall.bean.ShoppingCart;
 import com.zfy.simplemall.listener.onToolbarRightButtonClickListener;
 import com.zfy.simplemall.utils.CartProvider;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.util.List;

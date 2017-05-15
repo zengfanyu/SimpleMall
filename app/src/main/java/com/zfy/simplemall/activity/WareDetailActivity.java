@@ -19,7 +19,7 @@ import com.zfy.simplemall.config.Constant;
 import com.zfy.simplemall.listener.onToolbarLeftButtonClickListener;
 import com.zfy.simplemall.utils.CartProvider;
 import com.zfy.simplemall.utils.TypeCastUtils;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.io.Serializable;

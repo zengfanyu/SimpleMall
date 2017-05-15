@@ -28,7 +28,7 @@ import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.utils.ToastUtils;
 
 import java.util.Arrays;
 import java.util.List;

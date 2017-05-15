@@ -61,6 +61,8 @@ public class CommonJsonCallback implements Callback {
 
 
             });
+        } else if (isTokenWrong(response)) {
+            mListener.onFailure(new OkHttpException(response.code(), Constant.TOKEN_MSG));
         } else {
             mListener.onFailure(new OkHttpException(Constant.NETWORK_ERROR, Constant.NETWORK_ERROR));
         }
@@ -82,5 +84,12 @@ public class CommonJsonCallback implements Callback {
                 mListener.onFailure(new OkHttpException(Constant.JSON_ERROR, Constant.EMPTY_MSG));
             }
         }
+    }
+
+    public boolean isTokenWrong(Response response) {
+
+        return response.code() == Constant.TOKEN_EXPIRED ||
+                response.code() == Constant.TOKEN_MISS ||
+                response.code() == Constant.TOKEN_ERROR;
     }
 }

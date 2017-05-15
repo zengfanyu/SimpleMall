@@ -1,4 +1,4 @@
-package com.zfy.simplemall.utils.toastutils;
+package com.zfy.simplemall.utils;
 
 import android.content.Context;
 import android.widget.Toast;

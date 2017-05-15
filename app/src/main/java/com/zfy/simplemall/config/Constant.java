@@ -25,18 +25,21 @@ public class Constant {
     //http://112.124.22.238:8081/course_api/wares/detail.html
     public static final String URL_WARE_DETAIL = "http://112.124.22.238:8081/course_api/wares/detail.html";
     //http://112.124.22.238:8081/course_api/auth/login post方式 请求参数：phone password
+    public static final String URL_LOGIN = URL_BASE + "auth/login";
 
 
     public static final String EXTRA_CAMPAIGN_ID = "campaign_id";
     public static final String EXTRA_CAMPAIGN_NAME = "campaign_name";
     public static final String EXTRA_WARE_NAME = "ware_name";
-
+    //tab sort by
     public static final int TAB_TYPE_DEFAULT = 0;
     public static final int TAB_TYPE_SALES = 1;
     public static final int TAB_TYPE_PRICE = 2;
 
     public static final int TYPE_LIST = 1;
     public static final int TYPE_GIRD = 2;
+    //Used for DES encode.same as the key in server
+    public static final String DES_KEY = "Cniao5_123456";
 
     /**
      * the logic layer exception, may alter in different app
@@ -45,6 +48,7 @@ public class Constant {
     public static final int RESULT_CODE_VALUE = 0;
     public static final String ERROR_MSG = "emsg";
     public static final String EMPTY_MSG = "";
+    public static final String TOKEN_MSG = "token may be miss,error or expired check error code";
     public static final String COOKIE_STORE = "Set-Cookie"; // decide the server it
     // can has the value of
     // set-cookie2
@@ -56,6 +60,9 @@ public class Constant {
     public static final int JSON_ERROR = -2; // the JSON relative error
     public static final int OTHER_ERROR = -3; // the unknow error
     public static final int TIME_OUT = 30;
+    public static final int TOKEN_MISS = 401;
+    public static final int TOKEN_ERROR = 40;
+    public static final int TOKEN_EXPIRED = 403;
 
     /**
      * MaterialRefreshLayout status
@@ -64,4 +71,10 @@ public class Constant {
     public static final int STATE_REFRESH = 2;
     public static final int STATE_MORE = 3;
 
+    //sharedPreference key
+    public static final String SP_JSON_USER_KEY = "SP_json_user_key";
+    public static final String SP_TOKEN_KEY = "sp_token_key";
+
+    //code used for MineFragment startActivityForResult
+    public static final int START_LOGIN_ACTIVITY_CODE = 1;
 }

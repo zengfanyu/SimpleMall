@@ -11,7 +11,7 @@ import com.zfy.simplemall.R;
 import com.zfy.simplemall.bean.Wares;
 import com.zfy.simplemall.utils.CartProvider;
 import com.zfy.simplemall.utils.TypeCastUtils;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.utils.ToastUtils;
 
 import java.util.List;
 

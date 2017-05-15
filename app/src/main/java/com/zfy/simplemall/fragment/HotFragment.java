@@ -20,7 +20,7 @@ import com.zfy.simplemall.bean.Wares;
 import com.zfy.simplemall.config.Constant;
 import com.zfy.simplemall.listener.onPageListener;
 import com.zfy.simplemall.utils.PageUtils;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
+import com.zfy.simplemall.utils.ToastUtils;
 
 import java.util.List;
 

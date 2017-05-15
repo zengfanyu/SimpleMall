@@ -15,7 +15,6 @@ import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.exception.OkHttpException;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
-import com.zfy.simplemall.utils.toastutils.ToastUtils;
 
 import java.util.HashMap;
 import java.util.List;
