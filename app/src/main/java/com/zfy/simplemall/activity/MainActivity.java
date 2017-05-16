@@ -1,9 +1,7 @@
 package com.zfy.simplemall.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,42 +21,24 @@ import com.zfy.simplemall.widget.SearchToolBar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private FragmentTabHost mTabHost;
     private LayoutInflater mInflater;
     private List<TabBean> mTabs = new ArrayList<>(5);
-    private SearchToolBar mToolBar;
     private CartFragment mCartFragment;
 
-    //1.使用FragmentTabHost需要Activity继承FragmentActivity，AppCompatActivity已经继承了FragmentActivity
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        intiView();
+    protected int convertLayoutResId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initViews() {
+        mToolBar = (SearchToolBar) findViewById(R.id.search_tool_bar);
         initTab();
     }
 
-    private void intiView() {
-        mToolBar = (SearchToolBar) findViewById(R.id.search_tool_bar);
-//        mToolBar.setLeftButtonOnClickListener(new onToolbarLeftButtonClickListener() {
-//            @Override
-//            public void onClick() {
-//                Toast.makeText(MainActivity.this, "LeftButtonOnClick", Toast.LENGTH_SHORT).show();
-//                // TODO: 2017/4/25/025 Toolbar左侧按钮的点击事件
-//
-//            }
-//        });
-//        mToolBar.setRightButtonOnClickListener(new onToolbarRightButtonClickListener() {
-//            @Override
-//            public void onClick() {
-//                Toast.makeText(MainActivity.this, "RightButtonOnClick", Toast.LENGTH_SHORT).show();
-//                // TODO: 2017/4/25/025 Toolbar右侧按钮的点击事件
-//
-//            }
-//        });
-    }
 
     private void initTab() {
         TabBean homeTab = new TabBean(R.string.home, R.drawable.selector_icon_home, HomeFragment.class);

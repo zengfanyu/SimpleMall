@@ -1,18 +1,16 @@
 package com.zfy.simplemall.fragment;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.zfy.simplemall.R;
+import com.zfy.simplemall.activity.CreateOrderActivity;
 import com.zfy.simplemall.activity.MainActivity;
 import com.zfy.simplemall.adapter.CartAdapter;
 import com.zfy.simplemall.adapter.Decoration.DividerItemDecoration;
@@ -31,7 +29,6 @@ import java.util.List;
 
 public class CartFragment extends BaseFragment implements onToolbarRightButtonClickListener, View.OnClickListener {
 
-    private View mCartContentView;
     private CartProvider mCartProvider;
     private RecyclerView mRvCart;
     private SearchToolBar mToolBar;
@@ -45,21 +42,6 @@ public class CartFragment extends BaseFragment implements onToolbarRightButtonCl
     private Button mBtnOrder;
     private Button mBtnDel;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mCartContentView == null) {
-            mCartContentView = inflater.inflate(R.layout.fragment_cart, container, false);
-        }
-        ViewGroup parent = (ViewGroup) mCartContentView.getParent();
-        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
-        if (parent != null) {
-            parent.removeView(mCartContentView);
-        }
-        initViews();
-        return mCartContentView;
-    }
-
     @Override
     public void initViews() {
         mCartProvider = CartProvider.getInstance(getContext());
@@ -67,13 +49,19 @@ public class CartFragment extends BaseFragment implements onToolbarRightButtonCl
         showData();
     }
 
+    @Override
+    public int convertLayoutResId() {
+        return R.layout.fragment_cart;
+    }
+
     private void initView() {
-        mRvCart = (RecyclerView) mCartContentView.findViewById(R.id.id_recyclerView);
-        mCbAll = (CheckBox) mCartContentView.findViewById(R.id.id_all_cb);
-        mTvTotal = (TextView) mCartContentView.findViewById(R.id.id_total_tv);
-        mBtnOrder = (Button) mCartContentView.findViewById(R.id.id_order_btn);
-        mBtnDel = (Button) mCartContentView.findViewById(R.id.id_del_btn);
+        mRvCart = (RecyclerView) mContentView.findViewById(R.id.id_recyclerView);
+        mCbAll = (CheckBox) mContentView.findViewById(R.id.id_all_cb);
+        mTvTotal = (TextView) mContentView.findViewById(R.id.id_total_tv);
+        mBtnOrder = (Button) mContentView.findViewById(R.id.id_order_btn);
+        mBtnDel = (Button) mContentView.findViewById(R.id.id_del_btn);
         mBtnDel.setOnClickListener(this);
+        mBtnOrder.setOnClickListener(this);
     }
 
     private void showData() {
@@ -111,7 +99,7 @@ public class CartFragment extends BaseFragment implements onToolbarRightButtonCl
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mCartContentView = null;
+        mContentView = null;
     }
 
 
@@ -149,6 +137,12 @@ public class CartFragment extends BaseFragment implements onToolbarRightButtonCl
             case R.id.id_del_btn:
                 mAdapter.deleteItemData();
                 hideDeleteBtn();
+                break;
+            case R.id.id_order_btn:
+                Intent intent = new Intent(getActivity(), CreateOrderActivity.class);
+                startActivity(intent, true);
+                break;
+            default:
                 break;
         }
     }

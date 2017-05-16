@@ -1,9 +1,6 @@
 package com.zfy.simplemall.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,10 +26,10 @@ import java.util.List;
 /**
  * Created by ZFY on 2017/05/04.
  *
- * @function:
+ * @function:商品列表页面
  */
 
-public class WaresListActivity extends AppCompatActivity implements onPageListener, TabLayout.OnTabSelectedListener {
+public class WaresListActivity extends BaseActivity implements onPageListener, TabLayout.OnTabSelectedListener {
 
     private TabLayout mTabLayout;
     private MaterialRefreshLayout mRefreshLayout;
@@ -48,11 +45,14 @@ public class WaresListActivity extends AppCompatActivity implements onPageListen
     private SearchToolBar mToolBar;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wares_list);
+    protected int convertLayoutResId() {
+        return R.layout.activity_wares_list;
+    }
+
+    @Override
+    protected void initViews() {
         getIntentDate();
-        initViews();
+        initView();
         initTab();
         getDate();
     }
@@ -62,7 +62,7 @@ public class WaresListActivity extends AppCompatActivity implements onPageListen
         mTitleName = getIntent().getStringExtra(Constant.EXTRA_CAMPAIGN_NAME);
     }
 
-    private void initViews() {
+    private void initView() {
         initToolBar();
         mTabLayout = (TabLayout) findViewById(R.id.id_tablayout);
         mTvSummary = (TextView) findViewById(R.id.id_summary_tv);

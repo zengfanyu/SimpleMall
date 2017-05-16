@@ -1,14 +1,10 @@
 package com.zfy.simplemall.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.zfy.simplemall.R;
@@ -31,26 +27,11 @@ import java.util.List;
 
 public class HotFragment extends BaseFragment implements onPageListener {
 
-    protected View mHotContentView;
     private RecyclerView mRecyclerView;
     private MaterialRefreshLayout mRefreshLayout;
     private List<Wares> mWaresList;
     private HWAdapter mAdapter;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mHotContentView == null) {
-            mHotContentView = inflater.inflate(R.layout.fragment_hot, container, false);
-        }
-        ViewGroup parent = (ViewGroup) mHotContentView.getParent();
-        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
-        if (parent != null) {
-            parent.removeView(mHotContentView);
-        }
-        initViews();
-        return mHotContentView;
-    }
 
     @Override
     public void initViews() {
@@ -65,9 +46,14 @@ public class HotFragment extends BaseFragment implements onPageListener {
                 .build(getContext().getApplicationContext());
     }
 
+    @Override
+    public int convertLayoutResId() {
+        return R.layout.fragment_hot;
+    }
+
     private void initView() {
-        mRecyclerView = (RecyclerView) mHotContentView.findViewById(R.id.id_recyclerView);
-        mRefreshLayout = (MaterialRefreshLayout) mHotContentView.findViewById(R.id.id_refresh);
+        mRecyclerView = (RecyclerView) mContentView.findViewById(R.id.id_recyclerView);
+        mRefreshLayout = (MaterialRefreshLayout) mContentView.findViewById(R.id.id_refresh);
     }
 
     @Override
@@ -103,9 +89,5 @@ public class HotFragment extends BaseFragment implements onPageListener {
         mAdapter.addData(mAdapter.getDatas().size(), mWaresList);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mHotContentView = null;
-    }
+
 }

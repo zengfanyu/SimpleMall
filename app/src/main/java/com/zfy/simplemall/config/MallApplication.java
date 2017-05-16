@@ -1,6 +1,7 @@
 package com.zfy.simplemall.config;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.zfy.simplemall.bean.User;
@@ -14,6 +15,7 @@ import com.zfy.simplemall.utils.UserDataLocalUtils;
 
 public class MallApplication extends Application {
     private User mUser;
+    private Intent mTargetIntent;
 
     private static MallApplication sApplication;
 
@@ -55,5 +57,19 @@ public class MallApplication extends Application {
 
     public String getToken() {
         return UserDataLocalUtils.getToken(this);
+    }
+
+    public Intent getTargetIntent() {
+        return mTargetIntent;
+    }
+
+    public void setTargetIntent(Intent targetIntent) {
+        this.mTargetIntent = targetIntent;
+    }
+
+    public void jumpToTargetActivity() {
+        startActivity(mTargetIntent);
+        mTargetIntent = null;
+
     }
 }

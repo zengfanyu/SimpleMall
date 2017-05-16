@@ -29,6 +29,10 @@
         <activity android:name=".activity.LoginActivity">
 
         </activity>
+        <activity android:name=".activity.CreateOrderActivity">
+
+        </activity>
+
     </application>
 
 </manifest>

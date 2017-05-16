@@ -1,8 +1,5 @@
 package com.zfy.simplemall.activity;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -14,13 +11,13 @@ import com.zfy.simplemall.bean.User;
 import com.zfy.simplemall.config.Constant;
 import com.zfy.simplemall.config.MallApplication;
 import com.zfy.simplemall.utils.DESUtil;
+import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.exception.OkHttpException;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
-import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.widget.ClearEditText;
 
 import java.util.HashMap;
@@ -29,10 +26,10 @@ import java.util.Map;
 /**
  * Created by ZFY on 2017/05/14.
  *
- * @function:
+ * @function:登陆界面的Activity
  */
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private ClearEditText mEtPhone;
     private ClearEditText mEtPassword;
@@ -43,20 +40,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button mBtnLogin;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        initViews();
+    protected int convertLayoutResId() {
+        return R.layout.activity_login;
+    }
+
+    @Override
+    protected void initViews() {
+        initView();
     }
 
 
-    private void initViews() {
+    private void initView() {
         mEtPhone = (ClearEditText) findViewById(R.id.id_et_phone);
         mEtPassword = (ClearEditText) findViewById(R.id.id_et_password);
         mTvRegister = (TextView) findViewById(R.id.id_tv_register);
         mTvForget = (TextView) findViewById(R.id.id_tv_forget);
         mBtnLogin = (Button) findViewById(R.id.id_btn_login);
         mBtnLogin.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        requestData();
     }
 
     private void requestData() {
@@ -72,10 +77,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     new DisposeDataHandle(new DisposeDataListener() {
                         @Override
                         public void onSuccess(Object responseObj) {
+                            MallApplication application = MallApplication.getInstance();
                             LoginRespMsg<User> userLoginRespMsg = (LoginRespMsg) responseObj;
-                            MallApplication.getInstance().putUser(userLoginRespMsg.getData(), userLoginRespMsg.getToken());
-                            setResult(RESULT_OK);
-                            finish();
+                            application.putUser(userLoginRespMsg.getData(), userLoginRespMsg.getToken());
+                            if (application.getTargetIntent() == null) {
+                                setResult(RESULT_OK);
+                                finish();
+                            } else {
+                                startActivity(application.getTargetIntent());
+                                finish();
+                            }
 
                         }
 
@@ -88,10 +99,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }));
         }
-    }
-
-    @Override
-    public void onClick(View v) {
-        requestData();
     }
 }

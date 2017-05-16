@@ -2,8 +2,6 @@ package com.zfy.simplemall.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
@@ -18,8 +16,8 @@ import com.zfy.simplemall.bean.Wares;
 import com.zfy.simplemall.config.Constant;
 import com.zfy.simplemall.listener.onToolbarLeftButtonClickListener;
 import com.zfy.simplemall.utils.CartProvider;
-import com.zfy.simplemall.utils.TypeCastUtils;
 import com.zfy.simplemall.utils.ToastUtils;
+import com.zfy.simplemall.utils.TypeCastUtils;
 import com.zfy.simplemall.widget.SearchToolBar;
 
 import java.io.Serializable;
@@ -30,9 +28,8 @@ import java.io.Serializable;
  * @function:商品详情页 与HTML交互
  */
 
-public class WareDetailActivity extends AppCompatActivity implements onToolbarLeftButtonClickListener {
+public class WareDetailActivity extends BaseActivity implements onToolbarLeftButtonClickListener {
 
-    private SearchToolBar mToolBar;
     private WebView mWebView;
     private WebAppInterface mWebAppInterface;
     private Wares mWares;
@@ -40,17 +37,24 @@ public class WareDetailActivity extends AppCompatActivity implements onToolbarLe
     private FrameLayout mContainer;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wares_detail);
+    protected int convertLayoutResId() {
+        return R.layout.activity_wares_detail;
+    }
+
+    @Override
+    protected void initViews() {
+        mCartProvider = CartProvider.getInstance(this);
+        getExtraData();
+        initToolBar();
+        initWebView();
+    }
+
+    private void getExtraData() {
         Serializable serializableExtra = getIntent().getSerializableExtra(Constant.EXTRA_WARE_NAME);
         if (serializableExtra == null) {
             ToastUtils.showToast(getApplicationContext(), "没有拿到EXTRA");
         }
         mWares = (Wares) serializableExtra;
-        mCartProvider = CartProvider.getInstance(this);
-        initToolBar();
-        initWebView();
     }
 
     @Override

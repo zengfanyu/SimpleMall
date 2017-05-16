@@ -1,13 +1,9 @@
 package com.zfy.simplemall.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -23,12 +19,12 @@ import com.zfy.simplemall.adapter.HCAdapter;
 import com.zfy.simplemall.bean.BannerBean;
 import com.zfy.simplemall.bean.HomeCampaignBean;
 import com.zfy.simplemall.config.Constant;
+import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
-import com.zfy.simplemall.utils.ToastUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -40,31 +36,20 @@ import java.util.List;
 
 public class HomeFragment extends BaseFragment {
 
-    private View mHomeContentView;
     private SliderLayout mSliderLayout;
     private List<BannerBean> mBanners;
     private List<HomeCampaignBean> mHomeCampaignBeen;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mHomeContentView == null) {
-            mHomeContentView = inflater.inflate(R.layout.fragment_home, container, false);
-        }
-        ViewGroup parent = (ViewGroup) mHomeContentView.getParent();
-        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
-        if (parent != null) {
-            parent.removeView(mHomeContentView);
-        }
-        initViews();
-        return mHomeContentView;
-    }
 
     @Override
     public void initViews() {
         initBanner();
         initRecyclerView();
 
+    }
+
+    @Override
+    public int convertLayoutResId() {
+        return R.layout.fragment_home;
     }
 
     public void initBanner() {
@@ -107,7 +92,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void prepareRecyclerView() {
-        RecyclerView recyclerView = (RecyclerView) mHomeContentView.findViewById(R.id.home_rv);
+        RecyclerView recyclerView = (RecyclerView) mContentView.findViewById(R.id.home_rv);
         HCAdapter adapter = new HCAdapter(mHomeCampaignBeen, getContext());
         adapter.setOnItemClickListener(new BaseAdapter.onItemClickListener() {
             @Override
@@ -127,8 +112,8 @@ public class HomeFragment extends BaseFragment {
 
     //初始化slider
     private void prepareSlider() {
-        mSliderLayout = (SliderLayout) mHomeContentView.findViewById(R.id.slider);
-        PagerIndicator indicator = (PagerIndicator) mHomeContentView.findViewById(R.id.custom_indicator);
+        mSliderLayout = (SliderLayout) mContentView.findViewById(R.id.slider);
+        PagerIndicator indicator = (PagerIndicator) mContentView.findViewById(R.id.custom_indicator);
         if (mBanners != null) {
             for (final BannerBean bean : mBanners) {
                 TextSliderView sliderView = new TextSliderView(getActivity());
@@ -158,9 +143,5 @@ public class HomeFragment extends BaseFragment {
         super.onDestroy();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mHomeContentView = null;
-    }
+
 }

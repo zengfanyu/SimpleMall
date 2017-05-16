@@ -1,14 +1,10 @@
 package com.zfy.simplemall.fragment;
 
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
@@ -27,12 +23,12 @@ import com.zfy.simplemall.bean.CategoryBean;
 import com.zfy.simplemall.bean.Page;
 import com.zfy.simplemall.bean.Wares;
 import com.zfy.simplemall.config.Constant;
+import com.zfy.simplemall.utils.ToastUtils;
 import com.zfy.simplemall.utils.okhttpplus.CommonOkHttpClient;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataHandle;
 import com.zfy.simplemall.utils.okhttpplus.datadispose.DisposeDataListener;
 import com.zfy.simplemall.utils.okhttpplus.request.CommonRequest;
 import com.zfy.simplemall.utils.okhttpplus.request.RequestParams;
-import com.zfy.simplemall.utils.ToastUtils;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -50,7 +46,6 @@ import static com.zfy.simplemall.config.Constant.STATE_REFRESH;
 
 public class CategoryFragment extends BaseFragment {
 
-    private View mCategoryContentView;
     private List<BannerBean> mBanners;
     private List<CategoryBean> mCategories;
     private SliderLayout mSliderLayout;
@@ -66,20 +61,6 @@ public class CategoryFragment extends BaseFragment {
     private MaterialRefreshLayout mRefreshLayout;
     private RecyclerView mRvWares;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (mCategoryContentView == null) {
-            mCategoryContentView = inflater.inflate(R.layout.fragment_category, container, false);
-        }
-        ViewGroup parent = (ViewGroup) mCategoryContentView.getParent();
-        //缓存的View需要判断是否已经被加载过parent，如有，需要从parent移除，不然会报错
-        if (parent != null) {
-            parent.removeView(mCategoryContentView);
-        }
-        initViews();
-        return mCategoryContentView;
-    }
 
     @Override
     public void initViews() {
@@ -90,8 +71,13 @@ public class CategoryFragment extends BaseFragment {
 
     }
 
+    @Override
+    public int convertLayoutResId() {
+        return R.layout.fragment_category;
+    }
+
     private void initRefreshLayout() {
-        mRefreshLayout = (MaterialRefreshLayout) mCategoryContentView.findViewById(R.id.id_refresh);
+        mRefreshLayout = (MaterialRefreshLayout) mContentView.findViewById(R.id.id_refresh);
         mRefreshLayout.setLoadMore(true);
         mRefreshLayout.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -158,7 +144,7 @@ public class CategoryFragment extends BaseFragment {
     private void showWaresList() {
         switch (mCurrentState) {
             case STATE_NORMAL:
-                mRvWares = (RecyclerView) mCategoryContentView.findViewById(R.id.id_wares_rv);
+                mRvWares = (RecyclerView) mContentView.findViewById(R.id.id_wares_rv);
                 mAdapter = new WaresAdapter(mWaresList, getContext(), R.layout.gird_wares_item);
                 mRvWares.setAdapter(mAdapter);
                 mRvWares.addItemDecoration(new DividerGridItemDecoration(getContext()));
@@ -209,7 +195,7 @@ public class CategoryFragment extends BaseFragment {
      * 展示左侧分类列表数据到RecyclerView上
      */
     private void showCategoryList() {
-        RecyclerView rvCategory = (RecyclerView) mCategoryContentView.findViewById(R.id.id_category_rv);
+        RecyclerView rvCategory = (RecyclerView) mContentView.findViewById(R.id.id_category_rv);
         CategoryListAdapter adapter = new CategoryListAdapter(mCategories, getContext(),
                 R.layout.category_first_level_menu_item);
         adapter.setOnItemClickListener(new BaseAdapter.onItemClickListener() {
@@ -255,7 +241,7 @@ public class CategoryFragment extends BaseFragment {
      * 展示顶部轮播广告
      */
     private void showBanner() {
-        mSliderLayout = (SliderLayout) mCategoryContentView.findViewById(R.id.id_slider);
+        mSliderLayout = (SliderLayout) mContentView.findViewById(R.id.id_slider);
         if (mBanners != null) {
             for (final BannerBean banner : mBanners) {
                 TextSliderView sliderView = new TextSliderView(getActivity());
@@ -282,9 +268,4 @@ public class CategoryFragment extends BaseFragment {
         super.onDestroy();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        mCategoryContentView = null;
-    }
 }
