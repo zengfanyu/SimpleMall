@@ -26,6 +26,8 @@ public class Constant {
     public static final String URL_WARE_DETAIL = "http://112.124.22.238:8081/course_api/wares/detail.html";
     //http://112.124.22.238:8081/course_api/auth/login post方式 请求参数：phone password
     public static final String URL_LOGIN = URL_BASE + "auth/login";
+    //http://112.124.22.238:8081/course_api/auth/reg post方式 请求参数:phone password
+    public static final String URL_REGISTER = URL_BASE + "auth/reg";
 
 
     public static final String EXTRA_CAMPAIGN_ID = "campaign_id";

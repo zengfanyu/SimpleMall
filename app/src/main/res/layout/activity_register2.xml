@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:background="@color/bg_color">
+
+
+
+    <com.zfy.simplemall.widget.SearchToolBar
+        android:id="@+id/id_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="35dp"
+        app:isShowSearchView="false"
+        app:leftButtonIcon="@drawable/icon_back_32px"
+        app:title="用户注册(2/2)"/>
+
+
+    <TextView
+        android:id="@+id/id_tv_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/border_color"
+        android:textSize="12sp"
+        android:layout_marginTop="40dp"
+        android:padding="@dimen/largePadding"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="@dimen/largePadding"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp">
+
+            <com.zfy.simplemall.widget.ClearEditText
+                android:id="@+id/id_et_verification_code"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                style="@style/editText_base"
+                android:hint="@string/verification_hint"
+                android:inputType="number"
+                android:maxLength="4"/>
+
+
+            <Button
+                android:id="@+id/id_btn_resend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/smssdk_resend_identify_code"
+                style="@style/bigRedButton"
+                android:enabled="false"
+                />
+        </LinearLayout>
+        <View
+            style="@style/line_vertical"/>
+    </LinearLayout>
+</LinearLayout>

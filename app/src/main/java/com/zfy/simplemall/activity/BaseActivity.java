@@ -9,6 +9,8 @@ import com.zfy.simplemall.bean.User;
 import com.zfy.simplemall.config.MallApplication;
 import com.zfy.simplemall.widget.SearchToolBar;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by ZFY on 2017/05/16.
  *
@@ -22,6 +24,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(convertLayoutResId());
+        ButterKnife.bind(this);
         initViews();
     }
 

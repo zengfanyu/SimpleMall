@@ -7,6 +7,8 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.zfy.simplemall.bean.User;
 import com.zfy.simplemall.utils.UserDataLocalUtils;
 
+import cn.smssdk.SMSSDK;
+
 /**
  * Created by ZFY on 2017/4/13.
  *
@@ -27,6 +29,7 @@ public class MallApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sApplication = this;
+        SMSSDK.initSDK(this, "1deb5b5a3b81c", "cc09b21c8427a696abc37623fd6098d4");
         initUser();
         Fresco.initialize(this);
     }
@@ -72,4 +75,6 @@ public class MallApplication extends Application {
         mTargetIntent = null;
 
     }
+
+
 }

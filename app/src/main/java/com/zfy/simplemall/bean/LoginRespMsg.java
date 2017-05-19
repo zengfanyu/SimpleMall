@@ -2,18 +2,18 @@
 package com.zfy.simplemall.bean;
 
 
-public class LoginRespMsg<T> extends BaseRespMsg {
+public class LoginRespMsg extends BaseRespMsg {
 
 
     private String token;
 
-    private T data;
+    private User data;
 
-    public T getData() {
+    public User getData() {
         return data;
     }
 
-    public void setData(T data) {
+    public void setData(User data) {
         this.data = data;
     }
 
